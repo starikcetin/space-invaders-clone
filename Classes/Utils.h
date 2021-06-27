@@ -3,8 +3,11 @@
 
 #include "cocos2d.h"
 
+using namespace cocos2d;
+
 namespace Utils {
     void logLoadingError(const char* filename);
+    Sprite* makeRepeatingBg(const std::string &path, const Vec2 &origin, const Size &visibleSize);
 }
 
 

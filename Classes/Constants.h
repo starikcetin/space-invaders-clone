@@ -20,6 +20,8 @@
 #define PATH_IMG_LASER_RED      "images/laser_red.png"
 #define PATH_IMG_PLAYER         "images/player.png"
 #define PATH_IMG_POWER_ICON     "images/power_icon.png"
+//#define PATH_IMG_BUTTON         "images/button.png"
+#define PATH_IMG_PLAY           "images/play.png"
 
 //
 // Sound Paths

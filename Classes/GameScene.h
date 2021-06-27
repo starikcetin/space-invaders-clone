@@ -1,15 +1,11 @@
-#ifndef __MAINMENU_SCENE_H__
-#define __MAINMENU_SCENE_H__
+#ifndef __GAME_SCENE_H__
+#define __GAME_SCENE_H__
 
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
-
 #include "Constants.h"
 #include "Utils.h"
 
-using namespace ui;
-
-class MainMenu : public cocos2d::Scene
+class Game : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -17,7 +13,7 @@ public:
     virtual bool init();
 
     // implement the "static create()" method manually
-    CREATE_FUNC(MainMenu);
+    CREATE_FUNC(Game);
 };
 
-#endif // __MAINMENU_SCENE_H__
+#endif // __GAME_SCENE_H__
