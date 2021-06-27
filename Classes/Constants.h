@@ -13,7 +13,8 @@
 
 #define PATH_IMG_AURA           "images/aura.png"
 #define PATH_IMG_BG             "images/bg.png"
-#define PATH_IMG_ENEMY          "images/enemy.png"
+#define PATH_IMG_ENEMY_RED      "images/enemy_red.png"
+#define PATH_IMG_ENEMY_BLACK    "images/enemy_black.png"
 #define PATH_IMG_HIT_GREEN      "images/hit_green.png"
 #define PATH_IMG_HIT_RED        "images/hit_red.png"
 #define PATH_IMG_LASER_GREEN    "images/laser_green.png"
@@ -31,5 +32,10 @@
 #define PATH_SOUND_LOSE         "sounds/lose.png"
 #define PATH_SOUND_POWER_DOWN   "sounds/power_down.png"
 #define PATH_SOUND_POWER_UP     "sounds/power_up.png"
+
+//
+// Gameplay Params
+//
+#define PLAYER_SPEED            50
 
 #endif //PROJ_ANDROID_CONSTANTS_H
