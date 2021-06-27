@@ -1,18 +1,14 @@
-//
-// Created by cetin on 27/06/2021.
-//
-
 #ifndef PROJ_ANDROID_CONSTANTS_H
 #define PROJ_ANDROID_CONSTANTS_H
 
 //
-// Fonts
+// Font Paths
 //
 
 #define PATH_FONT_FUTURE_THIN   "fonts/kenvector_future_thin.ttf"
 
 //
-// Images
+// Image Paths
 //
 
 #define PATH_IMG_AURA           "images/aura.png"
@@ -26,7 +22,7 @@
 #define PATH_IMG_POWER_ICON     "images/power_icon.png"
 
 //
-// Sounds
+// Sound Paths
 //
 
 #define PATH_SOUND_KILL         "sounds/kill.png"
