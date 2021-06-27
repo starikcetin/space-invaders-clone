@@ -6,6 +6,7 @@
 
 #include "Constants.h"
 #include "Utils.h"
+#include "GameScene.h"
 
 using namespace ui;
 
@@ -16,7 +17,9 @@ public:
 
     virtual bool init();
 
-    // implement the "static create()" method manually
+private:
+    void playButtonOnClick(Ref* sender, Widget::TouchEventType type);
+
     CREATE_FUNC(MainMenu);
 };
 

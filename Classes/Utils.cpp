@@ -2,7 +2,7 @@
 
 void Utils::logLoadingError(const char* filename)
 {
-    printf("Error while loading: %s\n", filename);
+    CCLOG("Error while loading: %s\n", filename);
 }
 
 Sprite* Utils::makeRepeatingBg(const std::string &path, const Vec2 &origin, const Size &visibleSize)
