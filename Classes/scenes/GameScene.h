@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Constants.h"
 #include "Utils.h"
+#include "gameObjects/Player.h"
 
 class Game : public cocos2d::Scene
 {
@@ -17,15 +18,14 @@ public:
     void update(float) override;
 
 private:
-    Sprite* player;
-    Vec2 playerVelocity;
+    Player *player;
 
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
     void onTouchEnded(Touch* touch, Event* event);
 
     TouchState calculateTouchState(const Vec2 touchLocation);
-    Vec2 calculatePlayerVelocity(const TouchState touchState);
+    static float calculatePlayerSpeedX(const TouchState touchState);
 };
 
 #endif // __GAME_SCENE_H__

@@ -14,17 +14,16 @@ bool Game::init()
         return false;
     }
 
-    playerVelocity = Vec2::ZERO;
-
     auto visibleSize = _director->getVisibleSize();
     auto origin = _director->getVisibleOrigin();
 
     auto sprite_bg = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
     addChild(sprite_bg);
 
-    player = Sprite::create(PATH_IMG_PLAYER);
-    player->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    player->setPosition(origin.x + visibleSize.width / 2, origin.y + 50);
+    player = Player::create();
+    player->setLimitMinX(origin.x);
+    player->setLimitMaxX(origin.x + visibleSize.width);
+    player->resetPosition();
     addChild(player);
 
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -38,24 +37,25 @@ bool Game::init()
 }
 
 void Game::update(float dt) {
-    auto playerCurrentPosition = player->getPosition();
-    auto playerNewPosition = playerCurrentPosition + (playerVelocity * dt);
-    player->setPosition(playerNewPosition);
 }
 
 bool Game::onTouchBegan(Touch *touch, Event *event) {
-    auto touchState = calculateTouchState(touch->getLocation());
-    playerVelocity = calculatePlayerVelocity(touchState);
+    const auto touchState = calculateTouchState(touch->getLocation());
+    const auto newPlayerSpeedX = calculatePlayerSpeedX(touchState);
+    player->setSpeedX(newPlayerSpeedX);
+
     return true;
 }
 
 void Game::onTouchMoved(Touch *touch, Event *event) {
-    auto touchState = calculateTouchState(touch->getLocation());
-    playerVelocity = calculatePlayerVelocity(touchState);
+    const auto touchState = calculateTouchState(touch->getLocation());
+    const auto newPlayerSpeedX = calculatePlayerSpeedX(touchState);
+    player->setSpeedX(newPlayerSpeedX);
 }
 
 void Game::onTouchEnded(Touch *touch, Event *event) {
-    playerVelocity = calculatePlayerVelocity(UP);
+    const auto newPlayerSpeedX = calculatePlayerSpeedX(UP);
+    player->setSpeedX(newPlayerSpeedX);
 }
 
 Game::TouchState Game::calculateTouchState(const Vec2 touchLocation) {
@@ -67,10 +67,10 @@ Game::TouchState Game::calculateTouchState(const Vec2 touchLocation) {
     return isLeft ? LEFT : RIGHT;
 }
 
-Vec2 Game::calculatePlayerVelocity(const Game::TouchState touchState) {
+float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
     switch (touchState) {
-        case UP:    return Vec2::ZERO;
-        case LEFT:  return {-PLAYER_SPEED, 0};
-        case RIGHT: return {PLAYER_SPEED, 0};
+        case UP:    return 0;
+        case LEFT:  return -PLAYER_SPEED;
+        case RIGHT: return PLAYER_SPEED;
     }
 }
