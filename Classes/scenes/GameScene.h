@@ -9,7 +9,7 @@
 class Game : public cocos2d::Scene
 {
 public:
-    enum TouchState { UP, LEFT, RIGHT };
+    enum TouchState { NONE, LEFT, RIGHT };
 
     static cocos2d::Scene* createScene();
     virtual bool init() override;
