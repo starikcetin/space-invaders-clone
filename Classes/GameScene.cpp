@@ -23,8 +23,8 @@ bool Game::init()
     addChild(sprite_bg);
 
     player = Sprite::create(PATH_IMG_PLAYER);
-    player->setPosition(origin.x + visibleSize.width / 2, origin.y + 50);
     player->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    player->setPosition(origin.x + visibleSize.width / 2, origin.y + 50);
     addChild(player);
 
     auto touchListener = EventListenerTouchOneByOne::create();
@@ -69,7 +69,7 @@ Game::TouchState Game::calculateTouchState(const Vec2 touchLocation) {
 
 Vec2 Game::calculatePlayerVelocity(const Game::TouchState touchState) {
     switch (touchState) {
-        case UP:    return {0, 0};
+        case UP:    return Vec2::ZERO;
         case LEFT:  return {-PLAYER_SPEED, 0};
         case RIGHT: return {PLAYER_SPEED, 0};
     }
