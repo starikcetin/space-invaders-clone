@@ -26,12 +26,11 @@ bool Game::init()
     player->resetPosition();
     addChild(player);
 
-    for (int i = 0; i < 10; ++i) {
-        const auto enemy = EnemyFactory::makeWeakEnemy();
-        enemy->setAnchorPoint(Vec2::ZERO);
-        enemy->setPosition(origin.x + visibleSize.width * i / 9, origin.y + visibleSize.height - 20);
-        addChild(enemy);
-    }
+    const float enemyCellWidth = 35.0f;
+    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 0, origin.x, origin.x + visibleSize.width);
+    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 1, origin.x, origin.x + visibleSize.width);
+    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 2, origin.x, origin.x + visibleSize.width);
+    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 3, origin.x, origin.x + visibleSize.width);
 
     const auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
@@ -78,5 +77,20 @@ float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
         case NONE:  return 0;
         case LEFT:  return -PLAYER_SPEED;
         case RIGHT: return PLAYER_SPEED;
+    }
+}
+
+void Game::makeRowOfEnemies(const float cellWidth, const float posY, const float minPosX, const float maxPosX) {
+    const float rowWidth = maxPosX - minPosX;
+    const int cellCount = std::floor(rowWidth / cellWidth);
+    const float effectiveRowWidth = cellWidth * (float)(cellCount - 1);
+    const float halfExcessRowWidth = (rowWidth - effectiveRowWidth) / 2.0f;
+
+    for (int i = 0; i < cellCount; ++i) {
+        const float posX = minPosX + halfExcessRowWidth + (float)i * cellWidth;
+        const auto newEnemy = EnemyFactory::makeWeakEnemy();
+        newEnemy->setAnchorPoint(Vec2::ZERO);
+        newEnemy->setPosition(posX, posY);
+        addChild(newEnemy);
     }
 }

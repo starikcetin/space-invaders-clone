@@ -1,8 +1,6 @@
 #include "Enemy.h"
 
 bool Enemy::init() {
-
-
     scheduleUpdate();
     return true;
 }
