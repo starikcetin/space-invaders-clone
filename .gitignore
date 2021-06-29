@@ -1,10 +1,2 @@
-/*
-/*/
-
-!/.gitignore
-!/README.md
-!/LICENSE
-!/Acknowledgements.md
-
-!/Classes/
-!/Resources/
+/cocos2d/
+/proj.*/
