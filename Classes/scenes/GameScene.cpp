@@ -26,6 +26,13 @@ bool Game::init()
     player->resetPosition();
     addChild(player);
 
+    for (int i = 0; i < 10; ++i) {
+        const auto enemy = EnemyFactory::makeWeakEnemy();
+        enemy->setAnchorPoint(Vec2::ZERO);
+        enemy->setPosition(origin.x + visibleSize.width * i / 9, origin.y + visibleSize.height - 20);
+        addChild(enemy);
+    }
+
     const auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(Game::onTouchMoved, this);

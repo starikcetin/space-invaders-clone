@@ -5,6 +5,8 @@
 #include "Constants.h"
 #include "Utils.h"
 #include "gameObjects/Player.h"
+#include "gameObjects/Enemy.h"
+#include "factories/EnemyFactory.h"
 
 class Game : public cocos2d::Scene
 {

@@ -44,7 +44,7 @@
 #define POWER_BULLET_DAMAGE     100
 #define KILL_STREAK_FOR_POWER   5
 #define POWER_DURATION          3
-#define ENEMY_SPEED             20
+#define ENEMY_SPEED             10
 #define WEAK_ENEMY_HEALTH       50
 #define STRONG_ENEMY_HEALTH     100
 

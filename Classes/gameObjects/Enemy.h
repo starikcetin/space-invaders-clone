@@ -1,13 +1,21 @@
-//
-// Created by cetin on 28/06/2021.
-//
-
 #ifndef PROJ_ANDROID_ENEMY_H
 #define PROJ_ANDROID_ENEMY_H
 
 
-class Enemy {
+#include "cocos2d.h"
+#include "Constants.h"
 
+using namespace cocos2d;
+
+class Enemy : public Node {
+public:
+    CREATE_FUNC(Enemy);
+    virtual bool init() override;
+    virtual void update(float) override;
+
+CC_SYNTHESIZE(float, maxHealth, MaxHealth);
+CC_SYNTHESIZE(float, currentHealth, CurrentHealth);
+CC_SYNTHESIZE(float, speedY, SpeedY);
 };
 
 
