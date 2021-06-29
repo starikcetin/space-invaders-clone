@@ -1,7 +1,10 @@
 /*
 /*/
+
 !/.gitignore
 !/README.md
 !/LICENSE
+!/Acknowledgements.md
+
 !/Classes/
 !/Resources/
