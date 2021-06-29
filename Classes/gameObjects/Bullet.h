@@ -6,8 +6,19 @@
 #define PROJ_ANDROID_BULLET_H
 
 
-class Bullet {
+#include "cocos2d.h"
+#include "Constants.h"
 
+using namespace cocos2d;
+
+class Bullet : public Node {
+public:
+    CREATE_FUNC(Bullet);
+    virtual bool init() override;
+    virtual void update(float) override;
+
+CC_SYNTHESIZE(float, damage, Damage);
+CC_SYNTHESIZE(float, speedY, SpeedY);
 };
 
 

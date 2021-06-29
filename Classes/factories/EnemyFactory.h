@@ -2,7 +2,11 @@
 #define PROJ_ANDROID_ENEMYFACTORY_H
 
 
-#include <gameObjects/Enemy.h>
+#include "cocos2d.h"
+#include "Constants.h"
+#include "gameObjects/Enemy.h"
+
+using namespace cocos2d;
 
 namespace EnemyFactory {
     Enemy* makeStrongEnemy();

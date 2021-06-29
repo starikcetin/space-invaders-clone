@@ -6,9 +6,17 @@
 #define PROJ_ANDROID_BULLETFACTORY_H
 
 
-class BulletFactory {
+#include "cocos2d.h"
+#include "Constants.h"
+#include "gameObjects/Bullet.h"
 
-};
+using namespace cocos2d;
+
+namespace BulletFactory {
+    Bullet* makeStrongBullet();
+    Bullet* makeWeakBullet();
+    Bullet* makeBullet(const std::string &spritePath, const float damage);
+}
 
 
 #endif //PROJ_ANDROID_BULLETFACTORY_H

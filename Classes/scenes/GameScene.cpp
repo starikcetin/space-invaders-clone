@@ -40,11 +40,14 @@ bool Game::init()
     touchListener->onTouchEnded = CC_CALLBACK_2(Game::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
-    scheduleUpdate();
+    schedule(CC_SCHEDULE_SELECTOR(Game::spawnBullet), 1.0f / PLAYER_RATE_OF_FIRE);
     return true;
 }
 
-void Game::update(float dt) {
+void Game::spawnBullet(float dt) {
+    const auto bullet = BulletFactory::makeWeakBullet();
+    bullet->setPosition(player->getPosition());
+    addChild(bullet);
 }
 
 bool Game::onTouchBegan(Touch *touch, Event *event) {

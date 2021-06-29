@@ -7,6 +7,7 @@
 #include "gameObjects/Player.h"
 #include "gameObjects/Enemy.h"
 #include "factories/EnemyFactory.h"
+#include "factories/BulletFactory.h"
 
 class Game : public cocos2d::Scene
 {
@@ -17,7 +18,7 @@ public:
     virtual bool init() override;
     CREATE_FUNC(Game);
 
-    void update(float) override;
+    void spawnBullet(float dt);
 
 private:
     Player *player;

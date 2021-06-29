@@ -15,11 +15,11 @@
 #define PATH_IMG_AURA           "images/aura.png"
 #define PATH_IMG_BG             "images/bg.png"
 #define PATH_IMG_ENEMY_STRONG   "images/enemy_orange.png"
-#define PATH_IMG_ENEMY_WEAK    "images/enemy_black.png"
-#define PATH_IMG_HIT_GREEN      "images/hit_green.png"
-#define PATH_IMG_HIT_RED        "images/hit_red.png"
-#define PATH_IMG_LASER_GREEN    "images/laser_green.png"
-#define PATH_IMG_LASER_RED      "images/laser_red.png"
+#define PATH_IMG_ENEMY_WEAK     "images/enemy_black.png"
+#define PATH_IMG_HIT_STRONG     "images/hit_green.png"
+#define PATH_IMG_HIT_WEAK       "images/hit_red.png"
+#define PATH_IMG_BULLET_STRONG  "images/bullet_green.png"
+#define PATH_IMG_BULLET_WEAK    "images/bullet_red.png"
 #define PATH_IMG_PLAYER         "images/player.png"
 #define PATH_IMG_POWER_ICON     "images/power_icon.png"
 #define PATH_IMG_BUTTON         "images/button.png"
@@ -46,18 +46,18 @@
 // Gameplay Params
 //
 
-#define PLAYER_SPEED            50
-#define PLAYER_RATE_OF_FIRE     3
-#define POWER_DURATION          3
+#define PLAYER_SPEED            50.0f
+#define PLAYER_RATE_OF_FIRE     3.0f
+#define POWER_DURATION          3.0f
 #define KILL_STREAK_FOR_POWER   5
 
-#define BULLET_SPEED            200
-#define BULLET_WEAK_DAMAGE      25
-#define BULLET_STRONG_DAMAGE    100
+#define BULLET_SPEED            200.0f
+#define BULLET_WEAK_DAMAGE      25.0f
+#define BULLET_STRONG_DAMAGE    100.0f
 
-#define ENEMY_SPEED             10
-#define ENEMY_WEAK_HEALTH       50
-#define ENEMY_STRONG_HEALTH     100
+#define ENEMY_SPEED             10.0f
+#define ENEMY_WEAK_HEALTH       50.0f
+#define ENEMY_STRONG_HEALTH     100.0f
 
 
 #endif //PROJ_ANDROID_CONSTANTS_H
