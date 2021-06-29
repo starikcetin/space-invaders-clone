@@ -32,10 +32,7 @@ bool Game::init()
     player->resetPosition(playAreaMin.y);
     addChild(player);
 
-    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 0);
-    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 1);
-    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 2);
-    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 3);
+    makeGridOfEnemies(3);
 
     const auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
@@ -85,7 +82,16 @@ float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
     }
 }
 
-void Game::makeRowOfEnemies(const float posY) {
+void Game::makeGridOfEnemies(const int rows) {
+    for (int i = 0; i < rows; ++i) {
+        const auto posY = playAreaMax.y - (float) i * SHIP_CELL_SIZE;
+        const auto isStrong = i % 2 == 1;
+        makeRowOfEnemies(posY, isStrong);
+    }
+}
+
+// TODO: inline this into makeGridOfEnemies
+void Game::makeRowOfEnemies(const float posY, const bool isStrong) {
     const float rowWidth = playAreaMax.x - playAreaMin.x;
     const int cellCount = std::ceil(rowWidth / SHIP_CELL_SIZE);
     const float effectiveRowWidth = SHIP_CELL_SIZE * (float)(cellCount - 1);
@@ -93,7 +99,7 @@ void Game::makeRowOfEnemies(const float posY) {
 
     for (int i = 0; i < cellCount; ++i) {
         const float posX = playAreaMin.x + halfExcessRowWidth + (float)i * SHIP_CELL_SIZE;
-        const auto newEnemy = EnemyFactory::makeWeakEnemy();
+        const auto newEnemy = isStrong ? EnemyFactory::makeStrongEnemy() : EnemyFactory::makeWeakEnemy();
         newEnemy->setPosition(posX, posY);
         addChild(newEnemy);
     }

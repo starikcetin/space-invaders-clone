@@ -1,11 +1,11 @@
 #include "EnemyFactory.h"
 
 Enemy* EnemyFactory::makeStrongEnemy() {
-    return makeEnemy(PATH_IMG_ENEMY_RED, STRONG_ENEMY_HEALTH);
+    return makeEnemy(PATH_IMG_ENEMY_STRONG, ENEMY_STRONG_HEALTH);
 }
 
 Enemy* EnemyFactory::makeWeakEnemy() {
-    return makeEnemy(PATH_IMG_ENEMY_BLACK, WEAK_ENEMY_HEALTH);
+    return makeEnemy(PATH_IMG_ENEMY_WEAK, ENEMY_WEAK_HEALTH);
 }
 
 Enemy* EnemyFactory::makeEnemy(const std::string &spritePath, const float maxHealth) {

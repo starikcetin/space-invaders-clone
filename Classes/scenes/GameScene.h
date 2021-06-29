@@ -29,7 +29,8 @@ private:
 
     TouchState calculateTouchState(const Vec2 touchLocation);
     static float calculatePlayerSpeedX(const TouchState touchState);
-    void makeRowOfEnemies(const float posY);
+    void makeGridOfEnemies(const int rows);
+    void makeRowOfEnemies(const float posY, const bool isStrong);
 };
 
 #endif // __GAME_SCENE_H__
