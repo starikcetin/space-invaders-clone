@@ -17,20 +17,25 @@ bool Game::init()
     const auto visibleSize = _director->getVisibleSize();
     const auto origin = _director->getVisibleOrigin();
 
+    playAreaMin = Vec2(origin.x + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING,
+                       origin.y + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING);
+
+    playAreaMax = Vec2(origin.x + visibleSize.width - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING,
+                       origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING);
+
     const auto sprite_bg = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
     addChild(sprite_bg);
 
     player = Player::create();
-    player->setLimitMinX(origin.x);
-    player->setLimitMaxX(origin.x + visibleSize.width);
-    player->resetPosition();
+    player->setLimitMinX(playAreaMin.x);
+    player->setLimitMaxX(playAreaMax.x);
+    player->resetPosition(playAreaMin.y);
     addChild(player);
 
-    const float enemyCellWidth = 35.0f;
-    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 0, origin.x, origin.x + visibleSize.width);
-    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 1, origin.x, origin.x + visibleSize.width);
-    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 2, origin.x, origin.x + visibleSize.width);
-    makeRowOfEnemies(enemyCellWidth, origin.y + visibleSize.height - 20 - enemyCellWidth * 3, origin.x, origin.x + visibleSize.width);
+    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 0);
+    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 1);
+    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 2);
+    makeRowOfEnemies(playAreaMax.y - SHIP_CELL_SIZE * 3);
 
     const auto touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
@@ -80,16 +85,15 @@ float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
     }
 }
 
-void Game::makeRowOfEnemies(const float cellWidth, const float posY, const float minPosX, const float maxPosX) {
-    const float rowWidth = maxPosX - minPosX;
-    const int cellCount = std::floor(rowWidth / cellWidth);
-    const float effectiveRowWidth = cellWidth * (float)(cellCount - 1);
+void Game::makeRowOfEnemies(const float posY) {
+    const float rowWidth = playAreaMax.x - playAreaMin.x;
+    const int cellCount = std::ceil(rowWidth / SHIP_CELL_SIZE);
+    const float effectiveRowWidth = SHIP_CELL_SIZE * (float)(cellCount - 1);
     const float halfExcessRowWidth = (rowWidth - effectiveRowWidth) / 2.0f;
 
     for (int i = 0; i < cellCount; ++i) {
-        const float posX = minPosX + halfExcessRowWidth + (float)i * cellWidth;
+        const float posX = playAreaMin.x + halfExcessRowWidth + (float)i * SHIP_CELL_SIZE;
         const auto newEnemy = EnemyFactory::makeWeakEnemy();
-        newEnemy->setAnchorPoint(Vec2::ZERO);
         newEnemy->setPosition(posX, posY);
         addChild(newEnemy);
     }

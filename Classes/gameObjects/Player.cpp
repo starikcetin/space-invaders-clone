@@ -10,9 +10,9 @@ bool Player::init() {
     return true;
 }
 
-void Player::resetPosition() {
+void Player::resetPosition(const float posY) {
     auto const x = (limitMinX + limitMaxX) / 2.0f;
-    setPosition(x, 30);
+    setPosition(x, posY);
 }
 
 void Player::update(float dt) {

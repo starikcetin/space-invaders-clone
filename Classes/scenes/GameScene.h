@@ -21,6 +21,7 @@ public:
 
 private:
     Player *player;
+    Vec2 playAreaMin, playAreaMax;
 
     bool onTouchBegan(Touch* touch, Event* event);
     void onTouchMoved(Touch* touch, Event* event);
@@ -28,7 +29,7 @@ private:
 
     TouchState calculateTouchState(const Vec2 touchLocation);
     static float calculatePlayerSpeedX(const TouchState touchState);
-    void makeRowOfEnemies(const float cellWidth, const float posY, const float minPosX, const float maxPosX);
+    void makeRowOfEnemies(const float posY);
 };
 
 #endif // __GAME_SCENE_H__

@@ -12,7 +12,7 @@ public:
     virtual bool init() override;
     virtual void update(float) override;
 
-    void resetPosition();
+    void resetPosition(const float posY);
 
 private:
     Sprite *sprite;

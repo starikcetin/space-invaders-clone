@@ -34,6 +34,14 @@
 #define PATH_SOUND_POWER_UP     "sounds/power_up.png"
 
 //
+// Visual Params
+//
+
+#define PLAY_AREA_PADDING       10.0f
+#define SHIP_CELL_SIZE          35.0f
+#define HALF_SHIP_CELL_SIZE     SHIP_CELL_SIZE / 2.0f
+
+//
 // Gameplay Params
 //
 
