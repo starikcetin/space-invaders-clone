@@ -22,7 +22,6 @@
 #define PATH_IMG_BULLET_WEAK        "images/bullet_red.png"
 #define PATH_IMG_PLAYER             "images/player.png"
 #define PATH_IMG_POWER_ICON         "images/power_icon.png"
-#define PATH_IMG_BUTTON             "images/button.png"
 #define PATH_IMG_PLAY               "images/play.png"
 
 //
@@ -42,7 +41,7 @@
 #define SHIP_CELL_SIZE              35.0f
 #define HALF_SHIP_CELL_SIZE         SHIP_CELL_SIZE / 2.0f
 #define HIT_MARKER_ANIM_DURATION    0.1f
-#define AURA_FADE_DURATION          0.5f
+#define AURA_FADE_DURATION          0.25f
 
 //
 // Gameplay Params
@@ -68,8 +67,6 @@
 //
 // Physics Params
 //
-
-#define DUMMY_PHYSICS_BODY      PhysicsMaterial(0.0f, 0.0f, 0.0f)
 
 // category mask describes identity
 #define CATEGORY_MASK_BULLET    1u << 0u

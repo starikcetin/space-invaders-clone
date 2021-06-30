@@ -17,7 +17,6 @@ bool Game::init()
     enemiesAlive = 0;
     killStreakCounter = 0;
 
-//    _physicsWorld->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     _physicsWorld->setGravity(Vec2::ZERO);
 
     auto const visibleSize = _director->getVisibleSize();
@@ -29,8 +28,8 @@ bool Game::init()
     playAreaMax = Vec2(origin.x + visibleSize.width - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING,
                        origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING);
 
-    auto const sprite_bg = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
-    addChild(sprite_bg);
+    auto const background = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
+    addChild(background);
 
     player = Player::create();
     player->setLimitMinX(playAreaMin.x);
@@ -117,7 +116,7 @@ void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const 
         enemiesAlive--;
         AudioEngine::play2d(PATH_SOUND_KILL);
 
-        if(!isBulletStrong) { // strong bullets should not count towards kill streak
+        if(!isPowerActive && !isBulletStrong) {
             killStreakCounter++;
             powerUpIfAvailable();
         }
