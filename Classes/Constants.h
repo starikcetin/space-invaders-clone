@@ -42,6 +42,7 @@
 #define HALF_SHIP_CELL_SIZE         SHIP_CELL_SIZE / 2.0f
 #define HIT_MARKER_ANIM_DURATION    0.1f
 #define AURA_FADE_DURATION          0.25f
+#define TRANSITION_FADE_COLOR       Color3B(94,63,107)  // bright purple (main color in bg image)
 
 //
 // Gameplay Params

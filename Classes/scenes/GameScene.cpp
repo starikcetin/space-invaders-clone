@@ -195,6 +195,6 @@ void Game::handleGameOver(bool const isVictory) {
             .score = 666
     };
 
-    auto const gameScene = GameOver::create(gameOverData);
-    _director->replaceScene(gameScene);
+    auto const gameOverScene = GameOver::create(gameOverData);
+    _director->replaceScene(TransitionFade::create(0.25f, gameOverScene, TRANSITION_FADE_COLOR));
 }

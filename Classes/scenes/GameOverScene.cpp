@@ -50,5 +50,5 @@ bool GameOver::init() {
 
 void GameOver::playButtonOnClick(Ref *const sender, Widget::TouchEventType const type) {
     auto gameScene = Game::createScene();
-    _director->replaceScene(gameScene);
+    _director->replaceScene(TransitionFade::create(0.25f, gameScene, TRANSITION_FADE_COLOR));
 }
