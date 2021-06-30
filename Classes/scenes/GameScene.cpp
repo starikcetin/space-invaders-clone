@@ -115,6 +115,7 @@ void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const 
     if(enemy->isDead()) {
         removeChild(enemy, true);
         enemiesAlive--;
+        AudioEngine::play2d(PATH_SOUND_KILL);
 
         if(!isBulletStrong) { // strong bullets should not count towards kill streak
             killStreakCounter++;
@@ -176,6 +177,7 @@ void Game::powerUpIfAvailable() {
         killStreakCounter = 0;
         isPowerActive = true;
         player->enablePowerAura();
+        AudioEngine::play2d(PATH_SOUND_POWER_UP);
 
         scheduleOnce(CC_SCHEDULE_SELECTOR(Game::powerDown), POWER_DURATION);
     }
@@ -184,4 +186,5 @@ void Game::powerUpIfAvailable() {
 void Game::powerDown(float const dt) {
     isPowerActive = false;
     player->disablePowerAura();
+    AudioEngine::play2d(PATH_SOUND_POWER_DOWN);
 }

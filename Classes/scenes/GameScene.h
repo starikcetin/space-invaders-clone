@@ -2,6 +2,8 @@
 #define __GAME_SCENE_H__
 
 #include "cocos2d.h"
+#include "AudioEngine.h"
+
 #include "Constants.h"
 #include "Utils.h"
 #include "gameObjects/Player.h"

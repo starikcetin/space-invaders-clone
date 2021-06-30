@@ -29,10 +29,10 @@
 // Sound Paths
 //
 
-#define PATH_SOUND_KILL         "sounds/kill.png"
-#define PATH_SOUND_LOSE         "sounds/lose.png"
-#define PATH_SOUND_POWER_DOWN   "sounds/power_down.png"
-#define PATH_SOUND_POWER_UP     "sounds/power_up.png"
+#define PATH_SOUND_KILL         "sounds/kill.ogg"
+#define PATH_SOUND_LOSE         "sounds/lose.ogg"
+#define PATH_SOUND_POWER_DOWN   "sounds/power_down.ogg"
+#define PATH_SOUND_POWER_UP     "sounds/power_up.ogg"
 
 //
 // Visual Params
