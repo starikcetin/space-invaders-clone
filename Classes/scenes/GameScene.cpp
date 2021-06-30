@@ -15,6 +15,7 @@ bool Game::init()
     }
 
     enemiesAlive = 0;
+    killStreakCounter = 0;
 
 //    _physicsWorld->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     _physicsWorld->setGravity(Vec2::ZERO);
@@ -54,7 +55,7 @@ bool Game::init()
 }
 
 void Game::spawnBullet(float const dt) {
-    auto const bullet = BulletFactory::makeWeakBullet();
+    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet() : BulletFactory::makeWeakBullet();
     bullet->setPosition(player->getPosition());
     addChild(bullet);
 }
@@ -106,6 +107,7 @@ bool Game::onContactBegin(PhysicsContact const &contact)
 void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const &contactPoint)
 {
     auto const damage = bullet->getDamage();
+    auto const isBulletStrong = bullet->getIsStrong();
     enemy->takeDamage(damage);
 
     removeChild(bullet, true);
@@ -113,9 +115,14 @@ void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const 
     if(enemy->isDead()) {
         removeChild(enemy, true);
         enemiesAlive--;
+
+        if(!isBulletStrong) { // strong bullets should not count towards kill streak
+            killStreakCounter++;
+            powerUpIfAvailable();
+        }
     }
 
-    spawnHitMarker(contactPoint);
+    spawnHitMarker(contactPoint, isBulletStrong);
 }
 
 Game::TouchState Game::calculateTouchState(Vec2 const &touchLocation) {
@@ -158,8 +165,23 @@ void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
     }
 }
 
-void Game::spawnHitMarker(const Vec2 &contactPoint) {
-    auto const hitMarker = HitMarkerFactory::makeWeakHitMarker();
+void Game::spawnHitMarker(Vec2 const &contactPoint, bool const isStrong) {
+    auto const hitMarker = isStrong ? HitMarkerFactory::makeStrongHitMarker() : HitMarkerFactory::makeWeakHitMarker();
     hitMarker->setPosition(contactPoint);
     addChild(hitMarker);
+}
+
+void Game::powerUpIfAvailable() {
+    if(killStreakCounter >= KILL_STREAK_FOR_POWER) {
+        killStreakCounter = 0;
+        isPowerActive = true;
+        player->enablePowerAura();
+
+        scheduleOnce(CC_SCHEDULE_SELECTOR(Game::powerDown), POWER_DURATION);
+    }
+}
+
+void Game::powerDown(float const dt) {
+    isPowerActive = false;
+    player->disablePowerAura();
 }

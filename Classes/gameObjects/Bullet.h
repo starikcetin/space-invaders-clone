@@ -15,6 +15,7 @@ public:
 
 CC_SYNTHESIZE(float, damage, Damage);
 CC_SYNTHESIZE(float, speedY, SpeedY);
+CC_SYNTHESIZE(bool, isStrong, IsStrong);
 };
 
 

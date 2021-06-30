@@ -13,15 +13,18 @@ public:
     virtual void update(float) override;
 
     void resetPosition(float const posY);
+    void enablePowerAura();
+    void disablePowerAura();
 
 private:
-    Sprite *sprite;
+    Sprite *sprite, *aura;
 
     float calculateNewXWithinLimits(float const deltaX);
 
 CC_SYNTHESIZE(float, speedX, SpeedX);
 CC_SYNTHESIZE(float, limitMinX, LimitMinX);
 CC_SYNTHESIZE(float, limitMaxX, LimitMaxX);
+
 };
 
 

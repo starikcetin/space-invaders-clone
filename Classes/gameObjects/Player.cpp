@@ -8,6 +8,12 @@ bool Player::init() {
     sprite->setPosition(Vec2::ZERO);
     addChild(sprite);
 
+    aura = Sprite::create(PATH_IMG_AURA);
+    aura->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    aura->setPosition(Vec2::ZERO);
+    aura->setOpacity(0.0f);
+    addChild(aura);
+
     scheduleUpdate();
     return true;
 }
@@ -27,4 +33,14 @@ float Player::calculateNewXWithinLimits(float const deltaX) {
     auto const newUnboundX = getPositionX() + deltaX;
     auto const newBoundX = clampf(newUnboundX, limitMinX, limitMaxX);
     return newBoundX;
+}
+
+void Player::enablePowerAura() {
+    auto const fadeIn = FadeIn::create(AURA_FADE_DURATION);
+    aura->runAction(fadeIn);
+}
+
+void Player::disablePowerAura() {
+    auto const fadeOut = FadeOut::create(AURA_FADE_DURATION);
+    aura->runAction(fadeOut);
 }

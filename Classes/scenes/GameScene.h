@@ -25,6 +25,8 @@ private:
     Player *player;
     Vec2 playAreaMin, playAreaMax;
     int enemiesAlive;
+    int killStreakCounter;
+    bool isPowerActive;
 
     bool onTouchBegan(Touch* const touch, Event* const event);
     void onTouchMoved(Touch* const touch, Event* const event);
@@ -36,8 +38,9 @@ private:
     void makeGridOfEnemies(int const rows);
     void makeRowOfEnemies(float const posY, bool const isStrong);
     void handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const &contactPoint);
-
-    void spawnHitMarker(Vec2 const &contactPoint);
+    void spawnHitMarker(Vec2 const &contactPoint, bool const isStrong);
+    void powerUpIfAvailable();
+    void powerDown(float const dt);
 };
 
 #endif // __GAME_SCENE_H__
