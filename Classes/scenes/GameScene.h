@@ -6,6 +6,8 @@
 
 #include "Constants.h"
 #include "Utils.h"
+#include "GameOverData.h"
+#include "GameOverScene.h"
 #include "gameObjects/Player.h"
 #include "gameObjects/Enemy.h"
 #include "factories/EnemyFactory.h"
@@ -56,6 +58,8 @@ private:
     void powerUpIfAvailable();
 
     void powerDown(float const dt);
+
+    void handleGameOver(const bool isVictory);
 };
 
 #endif // __GAME_SCENE_H__

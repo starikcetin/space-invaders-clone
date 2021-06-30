@@ -61,6 +61,7 @@ list(APPEND GAME_SOURCE
      Classes/scenes/HelloWorldScene.cpp
 	 Classes/scenes/MainMenuScene.cpp
 	 Classes/scenes/GameScene.cpp
+	 Classes/scenes/GameOverScene.cpp
 	 Classes/gameObjects/Player.cpp
 	 Classes/gameObjects/Enemy.cpp
 	 Classes/gameObjects/Bullet.cpp
@@ -70,11 +71,13 @@ list(APPEND GAME_SOURCE
      )
 list(APPEND GAME_HEADER
 	 Classes/Constants.h
+	 Classes/GameOverData.h
      Classes/AppDelegate.h
 	 Classes/Utils.h
      Classes/scenes/HelloWorldScene.h
      Classes/scenes/MainMenuScene.h
 	 Classes/scenes/GameScene.h
+	 Classes/scenes/GameOverScene.h
 	 Classes/gameObjects/Player.h
 	 Classes/gameObjects/Enemy.h
 	 Classes/gameObjects/Bullet.h

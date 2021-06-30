@@ -108,6 +108,10 @@ void Game::handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const 
         enemiesAlive--;
         AudioEngine::play2d(PATH_SOUND_KILL);
 
+        if(enemiesAlive <= 0) {
+            handleGameOver(true);
+        }
+
         if (!isPowerActive && !isBulletStrong) {
             killStreakCounter++;
             powerUpIfAvailable();
@@ -183,4 +187,14 @@ void Game::powerDown(float const dt) {
     isPowerActive = false;
     player->disablePowerAura();
     AudioEngine::play2d(PATH_SOUND_POWER_DOWN);
+}
+
+void Game::handleGameOver(bool const isVictory) {
+    GameOverData const gameOverData = {
+            .isVictory = isVictory,
+            .score = 666
+    };
+
+    auto const gameScene = GameOver::create(gameOverData);
+    _director->replaceScene(gameScene);
 }
