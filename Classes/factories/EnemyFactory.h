@@ -13,7 +13,7 @@ namespace EnemyFactory {
 
     Enemy *makeWeakEnemy();
 
-    Enemy *makeEnemy(std::string const &spritePath, float const maxHealth);
+    Enemy *makeEnemy(std::string const &spritePath, float const maxHealth, int const score);
 }
 
 

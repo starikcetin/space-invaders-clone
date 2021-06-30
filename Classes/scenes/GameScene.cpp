@@ -23,7 +23,7 @@ bool Game::init() {
                        origin.y + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING);
 
     playAreaMax = Vec2(origin.x + visibleSize.width - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING,
-                       origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING);
+                       origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING - PLAY_AREA_EXTRA_TOP_PADDING);
 
     auto const background = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
     addChild(background);
@@ -35,6 +35,12 @@ bool Game::init() {
     addChild(player);
 
     makeGridOfEnemies(3);
+
+    scoreLabel = Label::createWithTTF("", PATH_FONT_FUTURE_THIN, 10);
+    scoreLabel->setAnchorPoint(Vec2::ANCHOR_TOP_LEFT);
+    scoreLabel->setPosition(Vec2(origin.x + 15, origin.y + visibleSize.height - 10));
+    updateScoreLabel();
+    addChild(scoreLabel);
 
     auto const touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
@@ -104,8 +110,10 @@ void Game::handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const 
     removeChild(bullet, true);
 
     if (enemy->isDead()) {
-        removeChild(enemy, true);
+        score += enemy->getScore();
+        updateScoreLabel();
         enemiesAlive--;
+        removeChild(enemy, true);
         AudioEngine::play2d(PATH_SOUND_KILL);
 
         if(enemiesAlive <= 0) {
@@ -192,9 +200,13 @@ void Game::powerDown(float const dt) {
 void Game::handleGameOver(bool const isVictory) {
     GameOverData const gameOverData = {
             .isVictory = isVictory,
-            .score = 666
+            .score = score
     };
 
     auto const gameOverScene = GameOver::create(gameOverData);
     _director->replaceScene(TransitionFade::create(0.25f, gameOverScene, TRANSITION_FADE_COLOR));
+}
+
+void Game::updateScoreLabel() {
+    scoreLabel->setString("Score: " + std::to_string(score));
 }

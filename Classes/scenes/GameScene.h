@@ -33,7 +33,9 @@ private:
     Vec2 playAreaMin, playAreaMax;
     int enemiesAlive;
     int killStreakCounter;
+    int score;
     bool isPowerActive;
+    Label* scoreLabel;
 
     bool onTouchBegan(Touch *const touch, Event *const event);
 
@@ -60,6 +62,8 @@ private:
     void powerDown(float const dt);
 
     void handleGameOver(const bool isVictory);
+
+    void updateScoreLabel();
 };
 
 #endif // __GAME_SCENE_H__

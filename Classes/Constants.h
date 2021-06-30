@@ -21,7 +21,6 @@
 #define PATH_IMG_BULLET_STRONG      "images/bullet_green.png"
 #define PATH_IMG_BULLET_WEAK        "images/bullet_red.png"
 #define PATH_IMG_PLAYER             "images/player.png"
-#define PATH_IMG_POWER_ICON         "images/power_icon.png"
 #define PATH_IMG_PLAY               "images/play.png"
 
 //
@@ -37,6 +36,7 @@
 // Visual Params
 //
 
+#define PLAY_AREA_EXTRA_TOP_PADDING 15.0f
 #define PLAY_AREA_PADDING           10.0f
 #define SHIP_CELL_SIZE              35.0f
 #define HALF_SHIP_CELL_SIZE         SHIP_CELL_SIZE / 2.0f
@@ -64,6 +64,8 @@
 #define ENEMY_SPEED             10.0f
 #define ENEMY_WEAK_HEALTH       50.0f
 #define ENEMY_STRONG_HEALTH     100.0f
+#define ENEMY_WEAK_SCORE        5
+#define ENEMY_STRONG_SCORE      10
 
 //
 // Physics Params

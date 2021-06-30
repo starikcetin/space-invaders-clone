@@ -22,6 +22,7 @@ public:
 CC_SYNTHESIZE(float, maxHealth, MaxHealth);
 CC_SYNTHESIZE(float, currentHealth, CurrentHealth);
 CC_SYNTHESIZE(float, speedY, SpeedY);
+CC_SYNTHESIZE(int, score, Score);
 };
 
 
