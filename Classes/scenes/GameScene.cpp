@@ -168,6 +168,7 @@ void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
         auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy()
                                        : EnemyFactory::makeWeakEnemy();
         newEnemy->setPosition(posX, posY);
+        newEnemy->setFinishLineY(playAreaMin.y);
         addChild(newEnemy);
         enemiesAlive++;
     }

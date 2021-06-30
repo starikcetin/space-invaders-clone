@@ -9,6 +9,10 @@ void Enemy::update(float const dt) {
     auto const curPosY = this->getPositionY();
     auto const newPosY = curPosY - speedY * dt;
     this->setPositionY(newPosY);
+
+    if(newPosY <= finishLineY) {
+        // game over, emit event
+    }
 }
 
 void Enemy::takeDamage(float const amount) {
