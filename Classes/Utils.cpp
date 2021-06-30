@@ -1,11 +1,11 @@
 #include "Utils.h"
 
-void Utils::logLoadingError(const char* filename)
+void Utils::logLoadingError(char* const filename)
 {
     CCLOG("Error while loading: %s\n", filename);
 }
 
-Sprite* Utils::makeRepeatingBg(const std::string &path, const Vec2 &origin, const Size &visibleSize)
+Sprite* Utils::makeRepeatingBg(std::string const &path, Vec2 const &origin, Size const &visibleSize)
 {
     Texture2D::TexParams texParams;
     texParams.magFilter = backend::SamplerFilter::LINEAR;

@@ -12,12 +12,12 @@ public:
     virtual bool init() override;
     virtual void update(float) override;
 
-    void resetPosition(const float posY);
+    void resetPosition(float const posY);
 
 private:
     Sprite *sprite;
 
-    float calculateNewXWithinLimits(const float deltaX);
+    float calculateNewXWithinLimits(float const deltaX);
 
 CC_SYNTHESIZE(float, speedX, SpeedX);
 CC_SYNTHESIZE(float, limitMinX, LimitMinX);

@@ -1,6 +1,8 @@
 #include "Player.h"
 
 bool Player::init() {
+    setTag(TAG_PLAYER);
+
     sprite = Sprite::create(PATH_IMG_PLAYER);
     sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     sprite->setPosition(Vec2::ZERO);
@@ -10,19 +12,19 @@ bool Player::init() {
     return true;
 }
 
-void Player::resetPosition(const float posY) {
+void Player::update(float const dt) {
+    auto const deltaX = speedX * dt;
+    auto const newX = calculateNewXWithinLimits(deltaX);
+    setPositionX(newX);
+}
+
+void Player::resetPosition(float const posY) {
     auto const x = (limitMinX + limitMaxX) / 2.0f;
     setPosition(x, posY);
 }
 
-void Player::update(float dt) {
-    const auto deltaX = speedX * dt;
-    const auto newX = calculateNewXWithinLimits(deltaX);
-    setPositionX(newX);
-}
-
-float Player::calculateNewXWithinLimits(const float deltaX) {
-    const auto newUnboundX = getPositionX() + deltaX;
-    const auto newBoundX = clampf(newUnboundX, limitMinX, limitMaxX);
+float Player::calculateNewXWithinLimits(float const deltaX) {
+    auto const newUnboundX = getPositionX() + deltaX;
+    auto const newBoundX = clampf(newUnboundX, limitMinX, limitMaxX);
     return newBoundX;
 }

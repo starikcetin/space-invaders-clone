@@ -15,7 +15,7 @@ using namespace cocos2d;
 namespace BulletFactory {
     Bullet* makeStrongBullet();
     Bullet* makeWeakBullet();
-    Bullet* makeBullet(const std::string &spritePath, const float damage);
+    Bullet* makeBullet(std::string const &spritePath, float const damage);
 }
 
 

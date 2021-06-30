@@ -11,7 +11,7 @@ using namespace cocos2d;
 namespace EnemyFactory {
     Enemy* makeStrongEnemy();
     Enemy* makeWeakEnemy();
-    Enemy* makeEnemy(const std::string &spritePath, const float maxHealth);
+    Enemy* makeEnemy(std::string const &spritePath, float const maxHealth);
 }
 
 

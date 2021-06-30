@@ -36,7 +36,7 @@ bool MainMenu::init()
     return true;
 }
 
-void MainMenu::playButtonOnClick(Ref *sender, Widget::TouchEventType type) {
+void MainMenu::playButtonOnClick(Ref* const sender, Widget::TouchEventType const type) {
     auto gameScene = Game::createScene();
     _director->replaceScene(gameScene);
 }

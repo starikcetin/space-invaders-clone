@@ -4,18 +4,24 @@ USING_NS_CC;
 
 Scene* Game::createScene()
 {
-    return Game::create();
+    auto const scene = Game::create();
+
+    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
+
+    return scene;
 }
 
 bool Game::init()
 {
-    if ( !Scene::init() )
+    if ( !Scene::initWithPhysics() )
     {
         return false;
     }
 
-    const auto visibleSize = _director->getVisibleSize();
-    const auto origin = _director->getVisibleOrigin();
+    _physicsWorld->setGravity(Vec2::ZERO);
+
+    auto const visibleSize = _director->getVisibleSize();
+    auto const origin = _director->getVisibleOrigin();
 
     playAreaMin = Vec2(origin.x + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING,
                        origin.y + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING);
@@ -23,7 +29,7 @@ bool Game::init()
     playAreaMax = Vec2(origin.x + visibleSize.width - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING,
                        origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING);
 
-    const auto sprite_bg = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
+    auto const sprite_bg = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
     addChild(sprite_bg);
 
     player = Player::create();
@@ -34,50 +40,86 @@ bool Game::init()
 
     makeGridOfEnemies(3);
 
-    const auto touchListener = EventListenerTouchOneByOne::create();
+    auto const touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(Game::onTouchMoved, this);
     touchListener->onTouchEnded = CC_CALLBACK_2(Game::onTouchEnded, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
 
+    auto const contactListener = EventListenerPhysicsContact::create();
+    contactListener->onContactBegin = CC_CALLBACK_1(Game::onContactBegin, this);
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
     schedule(CC_SCHEDULE_SELECTOR(Game::spawnBullet), 1.0f / PLAYER_RATE_OF_FIRE);
     return true;
 }
 
-void Game::spawnBullet(float dt) {
-    const auto bullet = BulletFactory::makeWeakBullet();
+void Game::spawnBullet(float const dt) {
+    auto const bullet = BulletFactory::makeWeakBullet();
     bullet->setPosition(player->getPosition());
     addChild(bullet);
 }
 
-bool Game::onTouchBegan(Touch *touch, Event *event) {
-    const auto touchState = calculateTouchState(touch->getLocation());
-    const auto newPlayerSpeedX = calculatePlayerSpeedX(touchState);
+bool Game::onTouchBegan(Touch* const touch, Event* const event) {
+    auto const touchState = calculateTouchState(touch->getLocation());
+    auto const newPlayerSpeedX = calculatePlayerSpeedX(touchState);
     player->setSpeedX(newPlayerSpeedX);
 
     return true;
 }
 
-void Game::onTouchMoved(Touch *touch, Event *event) {
-    const auto touchState = calculateTouchState(touch->getLocation());
-    const auto newPlayerSpeedX = calculatePlayerSpeedX(touchState);
+void Game::onTouchMoved(Touch* const touch, Event* const event) {
+    auto const touchState = calculateTouchState(touch->getLocation());
+    auto const newPlayerSpeedX = calculatePlayerSpeedX(touchState);
     player->setSpeedX(newPlayerSpeedX);
 }
 
-void Game::onTouchEnded(Touch *touch, Event *event) {
-    const auto newPlayerSpeedX = calculatePlayerSpeedX(NONE);
+void Game::onTouchEnded(Touch* const touch, Event* const event) {
+    auto const newPlayerSpeedX = calculatePlayerSpeedX(NONE);
     player->setSpeedX(newPlayerSpeedX);
 }
 
-Game::TouchState Game::calculateTouchState(const Vec2 touchLocation) {
-    const auto visibleSize = _director->getVisibleSize();
-    const auto origin = _director->getVisibleOrigin();
-    const auto halfScreenX = origin.x + visibleSize.width / 2;
-    const auto isLeft = touchLocation.x < halfScreenX;
+bool Game::onContactBegin(PhysicsContact const &contact)
+{
+    auto const nodeA = contact.getShapeA()->getBody()->getNode();
+    auto const nodeB = contact.getShapeB()->getBody()->getNode();
+
+    if (nodeA && nodeB)
+    {
+        if (nodeA->getTag() == TAG_BULLET && nodeB->getTag() == TAG_ENEMY)
+        {
+            auto const bullet = static_cast<Bullet*>(nodeA);
+            auto const enemy = static_cast<Enemy*>(nodeB);
+            handleBulletHit(bullet, enemy);
+        }
+        else if (nodeA->getTag() == TAG_ENEMY && nodeB->getTag() == TAG_BULLET)
+        {
+            auto const enemy = static_cast<Enemy*>(nodeA);
+            auto const bullet = static_cast<Bullet*>(nodeB);
+            handleBulletHit(bullet, enemy);
+        }
+    }
+
+    return false; // no collision
+}
+
+void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy)
+{
+    auto const damage = bullet->getDamage();
+    enemy->takeDamage(damage);
+
+    removeChild(bullet, true);
+}
+
+Game::TouchState Game::calculateTouchState(Vec2 const &touchLocation) {
+    auto const visibleSize = _director->getVisibleSize();
+    auto const origin = _director->getVisibleOrigin();
+    auto const halfScreenX = origin.x + visibleSize.width / 2;
+    auto const isLeft = touchLocation.x < halfScreenX;
     return isLeft ? LEFT : RIGHT;
 }
 
-float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
+float Game::calculatePlayerSpeedX(Game::TouchState const &touchState) {
     switch (touchState) {
         case NONE:  return 0;
         case LEFT:  return -PLAYER_SPEED;
@@ -85,16 +127,16 @@ float Game::calculatePlayerSpeedX(const Game::TouchState touchState) {
     }
 }
 
-void Game::makeGridOfEnemies(const int rows) {
+void Game::makeGridOfEnemies(int const rows) {
     for (int i = 0; i < rows; ++i) {
-        const auto posY = playAreaMax.y - (float) i * SHIP_CELL_SIZE;
-        const auto isStrong = i % 2 == 1;
+        auto const posY = playAreaMax.y - (float) i * SHIP_CELL_SIZE;
+        auto const isStrong = i % 2 == 1;
         makeRowOfEnemies(posY, isStrong);
     }
 }
 
 // TODO: inline this into makeGridOfEnemies
-void Game::makeRowOfEnemies(const float posY, const bool isStrong) {
+void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
     const float rowWidth = playAreaMax.x - playAreaMin.x;
     const int cellCount = std::ceil(rowWidth / SHIP_CELL_SIZE);
     const float effectiveRowWidth = SHIP_CELL_SIZE * (float)(cellCount - 1);
@@ -102,7 +144,7 @@ void Game::makeRowOfEnemies(const float posY, const bool isStrong) {
 
     for (int i = 0; i < cellCount; ++i) {
         const float posX = playAreaMin.x + halfExcessRowWidth + (float)i * SHIP_CELL_SIZE;
-        const auto newEnemy = isStrong ? EnemyFactory::makeStrongEnemy() : EnemyFactory::makeWeakEnemy();
+        auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy() : EnemyFactory::makeWeakEnemy();
         newEnemy->setPosition(posX, posY);
         addChild(newEnemy);
     }

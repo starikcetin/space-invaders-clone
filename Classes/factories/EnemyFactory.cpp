@@ -8,16 +8,24 @@ Enemy* EnemyFactory::makeWeakEnemy() {
     return makeEnemy(PATH_IMG_ENEMY_WEAK, ENEMY_WEAK_HEALTH);
 }
 
-Enemy* EnemyFactory::makeEnemy(const std::string &spritePath, const float maxHealth) {
-    const auto newEnemy = Enemy::create();
-    newEnemy->setMaxHealth(maxHealth);
-    newEnemy->setCurrentHealth(maxHealth);
-    newEnemy->setSpeedY(ENEMY_SPEED);
+Enemy* EnemyFactory::makeEnemy(std::string const &spritePath, float const maxHealth) {
+    auto const enemy = Enemy::create();
+    enemy->setMaxHealth(maxHealth);
+    enemy->setCurrentHealth(maxHealth);
+    enemy->setSpeedY(ENEMY_SPEED);
+    enemy->setTag(TAG_ENEMY);
 
-    const auto newEnemySprite = Sprite::create(spritePath);
-    newEnemySprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    newEnemySprite->setPosition(Vec2::ZERO);
-    newEnemy->addChild(newEnemySprite);
+    auto const sprite = Sprite::create(spritePath);
+    sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    sprite->setPosition(Vec2::ZERO);
+    enemy->addChild(sprite);
 
-    return newEnemy;
+    auto const physicsBody = PhysicsBody::createBox(sprite->getContentSize());
+    physicsBody->setDynamic(true);
+    physicsBody->setCategoryBitmask(CATEGORY_MASK_ENEMY);
+    physicsBody->setCollisionBitmask(COLLISION_MASK_ENEMY);
+    physicsBody->setContactTestBitmask(COLLISION_MASK_ENEMY);
+    enemy->setPhysicsBody(physicsBody);
+
+    return enemy;
 }

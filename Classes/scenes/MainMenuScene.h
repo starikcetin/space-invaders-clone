@@ -18,7 +18,7 @@ public:
     virtual bool init();
 
 private:
-    void playButtonOnClick(Ref* sender, Widget::TouchEventType type);
+    void playButtonOnClick(Ref* const sender, Widget::TouchEventType const type);
 
     CREATE_FUNC(MainMenu);
 };

@@ -5,8 +5,13 @@ bool Enemy::init() {
     return true;
 }
 
-void Enemy::update(float dt) {
-    const auto curPosY = this->getPositionY();
-    const auto newPosY = curPosY - speedY * dt;
+void Enemy::update(float const dt) {
+    auto const curPosY = this->getPositionY();
+    auto const newPosY = curPosY - speedY * dt;
     this->setPositionY(newPosY);
+}
+
+void Enemy::takeDamage(float const amount) {
+    auto const newHealth = std::max(currentHealth - amount, 0.0f);
+    setCurrentHealth(newHealth);
 }

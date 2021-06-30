@@ -18,20 +18,22 @@ public:
     virtual bool init() override;
     CREATE_FUNC(Game);
 
-    void spawnBullet(float dt);
+    void spawnBullet(float const dt);
 
 private:
     Player *player;
     Vec2 playAreaMin, playAreaMax;
 
-    bool onTouchBegan(Touch* touch, Event* event);
-    void onTouchMoved(Touch* touch, Event* event);
-    void onTouchEnded(Touch* touch, Event* event);
+    bool onTouchBegan(Touch* const touch, Event* const event);
+    void onTouchMoved(Touch* const touch, Event* const event);
+    void onTouchEnded(Touch* const touch, Event* const event);
+    bool onContactBegin(PhysicsContact const &contact);
 
-    TouchState calculateTouchState(const Vec2 touchLocation);
-    static float calculatePlayerSpeedX(const TouchState touchState);
-    void makeGridOfEnemies(const int rows);
-    void makeRowOfEnemies(const float posY, const bool isStrong);
+    TouchState calculateTouchState(Vec2 const &touchLocation);
+    static float calculatePlayerSpeedX(TouchState const &touchState);
+    void makeGridOfEnemies(int const rows);
+    void makeRowOfEnemies(float const posY, bool const isStrong);
+    void handleBulletHit(Bullet* const bullet, Enemy* const enemy);
 };
 
 #endif // __GAME_SCENE_H__

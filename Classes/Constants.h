@@ -46,6 +46,10 @@
 // Gameplay Params
 //
 
+#define TAG_PLAYER              0
+#define TAG_ENEMY               1
+#define TAG_BULLET              2
+
 #define PLAYER_SPEED            50.0f
 #define PLAYER_RATE_OF_FIRE     3.0f
 #define POWER_DURATION          3.0f
@@ -58,6 +62,20 @@
 #define ENEMY_SPEED             10.0f
 #define ENEMY_WEAK_HEALTH       50.0f
 #define ENEMY_STRONG_HEALTH     100.0f
+
+//
+// Physics Params
+//
+
+#define DUMMY_PHYSICS_BODY      PhysicsMaterial(0.0f, 0.0f, 0.0f)
+
+// category mask describes identity
+#define CATEGORY_MASK_BULLET    1u << 0u
+#define CATEGORY_MASK_ENEMY     1u << 1u
+
+// collision mask describes which categories it can collide with
+#define COLLISION_MASK_BULLET   CATEGORY_MASK_ENEMY
+#define COLLISION_MASK_ENEMY    CATEGORY_MASK_BULLET
 
 
 #endif //PROJ_ANDROID_CONSTANTS_H

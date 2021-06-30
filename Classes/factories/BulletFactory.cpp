@@ -12,15 +12,23 @@ Bullet* BulletFactory::makeWeakBullet() {
     return makeBullet(PATH_IMG_BULLET_WEAK, BULLET_WEAK_DAMAGE);
 }
 
-Bullet* BulletFactory::makeBullet(const std::string &spritePath, const float damage) {
-    const auto newBullet = Bullet::create();
-    newBullet->setDamage(damage);
-    newBullet->setSpeedY(BULLET_SPEED);
+Bullet* BulletFactory::makeBullet(std::string const &spritePath, float const damage) {
+    auto const bullet = Bullet::create();
+    bullet->setDamage(damage);
+    bullet->setSpeedY(BULLET_SPEED);
+    bullet->setTag(TAG_BULLET);
 
-    const auto newBulletSprite = Sprite::create(spritePath);
-    newBulletSprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    newBulletSprite->setPosition(Vec2::ZERO);
-    newBullet->addChild(newBulletSprite);
+    auto const sprite = Sprite::create(spritePath);
+    sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    sprite->setPosition(Vec2::ZERO);
+    bullet->addChild(sprite);
 
-    return newBullet;
+    auto const physicsBody = PhysicsBody::createBox(sprite->getContentSize());
+    physicsBody->setDynamic(true);
+    physicsBody->setCategoryBitmask(CATEGORY_MASK_BULLET);
+    physicsBody->setCollisionBitmask(COLLISION_MASK_BULLET);
+    physicsBody->setContactTestBitmask(COLLISION_MASK_BULLET);
+    bullet->setPhysicsBody(physicsBody);
+
+    return bullet;
 }

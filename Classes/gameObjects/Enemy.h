@@ -13,6 +13,8 @@ public:
     virtual bool init() override;
     virtual void update(float) override;
 
+    void takeDamage(float const amount);
+
 CC_SYNTHESIZE(float, maxHealth, MaxHealth);
 CC_SYNTHESIZE(float, currentHealth, CurrentHealth);
 CC_SYNTHESIZE(float, speedY, SpeedY);
