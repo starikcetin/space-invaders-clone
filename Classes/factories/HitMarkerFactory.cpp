@@ -12,11 +12,11 @@ Sprite* HitMarkerFactory::makeHitMarker(std::string const &spritePath) {
     auto const sprite = Sprite::create(spritePath);
     sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 
-    sprite->setOpacity(0.0f);
-    sprite->setScale(0.0f);
-
     // animation, also self destructs at the end
     {
+        sprite->setOpacity(0.0f);
+        sprite->setScale(0.0f);
+
         auto const fadeIn = FadeIn::create(HIT_MARKER_ANIM_DURATION);
         auto const fadeOut = FadeOut::create(HIT_MARKER_ANIM_DURATION);
         auto const fadeInOut = Sequence::create(fadeIn, fadeOut, NULL);
