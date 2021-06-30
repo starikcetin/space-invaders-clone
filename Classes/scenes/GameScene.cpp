@@ -4,11 +4,7 @@ USING_NS_CC;
 
 Scene* Game::createScene()
 {
-    auto const scene = Game::create();
-
-    scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-
-    return scene;
+    return Game::create();
 }
 
 bool Game::init()
@@ -18,6 +14,9 @@ bool Game::init()
         return false;
     }
 
+    enemiesAlive = 0;
+
+//    _physicsWorld->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
     _physicsWorld->setGravity(Vec2::ZERO);
 
     auto const visibleSize = _director->getVisibleSize();
@@ -83,6 +82,7 @@ bool Game::onContactBegin(PhysicsContact const &contact)
 {
     auto const nodeA = contact.getShapeA()->getBody()->getNode();
     auto const nodeB = contact.getShapeB()->getBody()->getNode();
+    auto const contactPoint = contact.getContactData()->points[0];
 
     if (nodeA && nodeB)
     {
@@ -90,25 +90,32 @@ bool Game::onContactBegin(PhysicsContact const &contact)
         {
             auto const bullet = static_cast<Bullet*>(nodeA);
             auto const enemy = static_cast<Enemy*>(nodeB);
-            handleBulletHit(bullet, enemy);
+            handleBulletHit(bullet, enemy, contactPoint);
         }
         else if (nodeA->getTag() == TAG_ENEMY && nodeB->getTag() == TAG_BULLET)
         {
             auto const enemy = static_cast<Enemy*>(nodeA);
             auto const bullet = static_cast<Bullet*>(nodeB);
-            handleBulletHit(bullet, enemy);
+            handleBulletHit(bullet, enemy, contactPoint);
         }
     }
 
     return false; // no collision
 }
 
-void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy)
+void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const &contactPoint)
 {
     auto const damage = bullet->getDamage();
     enemy->takeDamage(damage);
 
     removeChild(bullet, true);
+
+    if(enemy->isDead()) {
+        removeChild(enemy, true);
+        enemiesAlive--;
+    }
+
+    spawnHitMarker(contactPoint);
 }
 
 Game::TouchState Game::calculateTouchState(Vec2 const &touchLocation) {
@@ -147,5 +154,12 @@ void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
         auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy() : EnemyFactory::makeWeakEnemy();
         newEnemy->setPosition(posX, posY);
         addChild(newEnemy);
+        enemiesAlive++;
     }
+}
+
+void Game::spawnHitMarker(const Vec2 &contactPoint) {
+    auto const hitMarker = HitMarkerFactory::makeWeakHitMarker();
+    hitMarker->setPosition(contactPoint);
+    addChild(hitMarker);
 }

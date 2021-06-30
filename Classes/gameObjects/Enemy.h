@@ -14,6 +14,7 @@ public:
     virtual void update(float) override;
 
     void takeDamage(float const amount);
+    bool isDead() const;
 
 CC_SYNTHESIZE(float, maxHealth, MaxHealth);
 CC_SYNTHESIZE(float, currentHealth, CurrentHealth);

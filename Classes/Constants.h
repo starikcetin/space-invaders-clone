@@ -12,18 +12,18 @@
 // Image Paths
 //
 
-#define PATH_IMG_AURA           "images/aura.png"
-#define PATH_IMG_BG             "images/bg.png"
-#define PATH_IMG_ENEMY_STRONG   "images/enemy_orange.png"
-#define PATH_IMG_ENEMY_WEAK     "images/enemy_black.png"
-#define PATH_IMG_HIT_STRONG     "images/hit_green.png"
-#define PATH_IMG_HIT_WEAK       "images/hit_red.png"
-#define PATH_IMG_BULLET_STRONG  "images/bullet_green.png"
-#define PATH_IMG_BULLET_WEAK    "images/bullet_red.png"
-#define PATH_IMG_PLAYER         "images/player.png"
-#define PATH_IMG_POWER_ICON     "images/power_icon.png"
-#define PATH_IMG_BUTTON         "images/button.png"
-#define PATH_IMG_PLAY           "images/play.png"
+#define PATH_IMG_AURA               "images/aura.png"
+#define PATH_IMG_BG                 "images/bg.png"
+#define PATH_IMG_ENEMY_STRONG       "images/enemy_orange.png"
+#define PATH_IMG_ENEMY_WEAK         "images/enemy_black.png"
+#define PATH_IMG_HIT_MARKER_STRONG  "images/hit_green.png"
+#define PATH_IMG_HIT_MARKER_WEAK    "images/hit_red.png"
+#define PATH_IMG_BULLET_STRONG      "images/bullet_green.png"
+#define PATH_IMG_BULLET_WEAK        "images/bullet_red.png"
+#define PATH_IMG_PLAYER             "images/player.png"
+#define PATH_IMG_POWER_ICON         "images/power_icon.png"
+#define PATH_IMG_BUTTON             "images/button.png"
+#define PATH_IMG_PLAY               "images/play.png"
 
 //
 // Sound Paths
@@ -38,9 +38,10 @@
 // Visual Params
 //
 
-#define PLAY_AREA_PADDING       10.0f
-#define SHIP_CELL_SIZE          35.0f
-#define HALF_SHIP_CELL_SIZE     SHIP_CELL_SIZE / 2.0f
+#define PLAY_AREA_PADDING           10.0f
+#define SHIP_CELL_SIZE              35.0f
+#define HALF_SHIP_CELL_SIZE         SHIP_CELL_SIZE / 2.0f
+#define HIT_MARKER_ANIM_DURATION    0.1f
 
 //
 // Gameplay Params

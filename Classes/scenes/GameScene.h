@@ -8,6 +8,7 @@
 #include "gameObjects/Enemy.h"
 #include "factories/EnemyFactory.h"
 #include "factories/BulletFactory.h"
+#include "factories/HitMarkerFactory.h"
 
 class Game : public cocos2d::Scene
 {
@@ -23,6 +24,7 @@ public:
 private:
     Player *player;
     Vec2 playAreaMin, playAreaMax;
+    int enemiesAlive;
 
     bool onTouchBegan(Touch* const touch, Event* const event);
     void onTouchMoved(Touch* const touch, Event* const event);
@@ -33,7 +35,9 @@ private:
     static float calculatePlayerSpeedX(TouchState const &touchState);
     void makeGridOfEnemies(int const rows);
     void makeRowOfEnemies(float const posY, bool const isStrong);
-    void handleBulletHit(Bullet* const bullet, Enemy* const enemy);
+    void handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const &contactPoint);
+
+    void spawnHitMarker(Vec2 const &contactPoint);
 };
 
 #endif // __GAME_SCENE_H__

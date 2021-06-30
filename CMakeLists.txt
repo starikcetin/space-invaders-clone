@@ -66,6 +66,7 @@ list(APPEND GAME_SOURCE
 	 Classes/gameObjects/Bullet.cpp
 	 Classes/factories/BulletFactory.cpp
 	 Classes/factories/EnemyFactory.cpp
+	 Classes/factories/HitMarkerFactory.cpp
      )
 list(APPEND GAME_HEADER
 	 Classes/Constants.h
@@ -79,6 +80,7 @@ list(APPEND GAME_HEADER
 	 Classes/gameObjects/Bullet.h
 	 Classes/factories/BulletFactory.h
 	 Classes/factories/EnemyFactory.h
+	 Classes/factories/HitMarkerFactory.h
      )
 
 if(ANDROID)

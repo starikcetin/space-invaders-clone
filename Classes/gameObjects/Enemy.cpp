@@ -15,3 +15,7 @@ void Enemy::takeDamage(float const amount) {
     auto const newHealth = std::max(currentHealth - amount, 0.0f);
     setCurrentHealth(newHealth);
 }
+
+bool Enemy::isDead() const {
+    return currentHealth < 0.01f;
+}
