@@ -64,6 +64,8 @@ private:
     void handleGameOver(const bool isVictory);
 
     void updateScoreLabel();
+
+    void onEnemyPassedFinish();
 };
 
 #endif // __GAME_SCENE_H__

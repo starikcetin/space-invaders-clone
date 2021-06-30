@@ -52,6 +52,9 @@ bool Game::init() {
     contactListener->onContactBegin = CC_CALLBACK_1(Game::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+    auto const enemyPassedFinishListener = EventListenerCustom::create(EVENT_ENEMY_PASSED_FINISH, CC_CALLBACK_0(Game::onEnemyPassedFinish, this));
+    _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyPassedFinishListener, this);
+
     schedule(CC_SCHEDULE_SELECTOR(Game::spawnBullet), 1.0f / PLAYER_RATE_OF_FIRE);
     return true;
 }
@@ -210,4 +213,8 @@ void Game::handleGameOver(bool const isVictory) {
 
 void Game::updateScoreLabel() {
     scoreLabel->setString("Score: " + std::to_string(score));
+}
+
+void Game::onEnemyPassedFinish() {
+    handleGameOver(false);
 }
