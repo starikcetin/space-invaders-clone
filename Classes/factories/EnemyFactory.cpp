@@ -1,14 +1,14 @@
 #include "EnemyFactory.h"
 
-Enemy* EnemyFactory::makeStrongEnemy() {
+Enemy *EnemyFactory::makeStrongEnemy() {
     return makeEnemy(PATH_IMG_ENEMY_STRONG, ENEMY_STRONG_HEALTH);
 }
 
-Enemy* EnemyFactory::makeWeakEnemy() {
+Enemy *EnemyFactory::makeWeakEnemy() {
     return makeEnemy(PATH_IMG_ENEMY_WEAK, ENEMY_WEAK_HEALTH);
 }
 
-Enemy* EnemyFactory::makeEnemy(std::string const &spritePath, float const maxHealth) {
+Enemy *EnemyFactory::makeEnemy(std::string const &spritePath, float const maxHealth) {
     auto const enemy = Enemy::create();
     enemy->setMaxHealth(maxHealth);
     enemy->setCurrentHealth(maxHealth);

@@ -10,15 +10,14 @@
 
 using namespace ui;
 
-class MainMenu : public cocos2d::Scene
-{
+class MainMenu : public cocos2d::Scene {
 public:
-    static cocos2d::Scene* createScene();
+    static cocos2d::Scene *createScene();
 
     virtual bool init();
 
 private:
-    void playButtonOnClick(Ref* const sender, Widget::TouchEventType const type);
+    void playButtonOnClick(Ref *const sender, Widget::TouchEventType const type);
 
     CREATE_FUNC(MainMenu);
 };

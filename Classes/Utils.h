@@ -6,8 +6,9 @@
 using namespace cocos2d;
 
 namespace Utils {
-    void logLoadingError(char* const filename);
-    Sprite* makeRepeatingBg(std::string const &path, Vec2 const &origin, Size const &visibleSize);
+    void logLoadingError(char *const filename);
+
+    Sprite *makeRepeatingBg(std::string const &path, Vec2 const &origin, Size const &visibleSize);
 }
 
 

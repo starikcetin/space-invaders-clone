@@ -1,14 +1,14 @@
 #include "HitMarkerFactory.h"
 
-Sprite* HitMarkerFactory::makeStrongHitMarker() {
+Sprite *HitMarkerFactory::makeStrongHitMarker() {
     return makeHitMarker(PATH_IMG_HIT_MARKER_STRONG);
 }
 
-Sprite* HitMarkerFactory::makeWeakHitMarker() {
+Sprite *HitMarkerFactory::makeWeakHitMarker() {
     return makeHitMarker(PATH_IMG_HIT_MARKER_WEAK);
 }
 
-Sprite* HitMarkerFactory::makeHitMarker(std::string const &spritePath) {
+Sprite *HitMarkerFactory::makeHitMarker(std::string const &spritePath) {
     auto const sprite = Sprite::create(spritePath);
     sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
 

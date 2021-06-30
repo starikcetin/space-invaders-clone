@@ -8,9 +8,11 @@
 using namespace cocos2d;
 
 namespace HitMarkerFactory {
-    Sprite* makeStrongHitMarker();
-    Sprite* makeWeakHitMarker();
-    Sprite* makeHitMarker(std::string const &spritePath);
+    Sprite *makeStrongHitMarker();
+
+    Sprite *makeWeakHitMarker();
+
+    Sprite *makeHitMarker(std::string const &spritePath);
 }
 
 

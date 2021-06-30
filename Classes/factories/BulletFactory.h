@@ -9,9 +9,11 @@
 using namespace cocos2d;
 
 namespace BulletFactory {
-    Bullet* makeStrongBullet();
-    Bullet* makeWeakBullet();
-    Bullet* makeBullet(std::string const &spritePath, float const damage, bool const isStrong);
+    Bullet *makeStrongBullet();
+
+    Bullet *makeWeakBullet();
+
+    Bullet *makeBullet(std::string const &spritePath, float const damage, bool const isStrong);
 }
 
 

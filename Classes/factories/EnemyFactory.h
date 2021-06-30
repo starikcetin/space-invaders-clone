@@ -9,9 +9,11 @@
 using namespace cocos2d;
 
 namespace EnemyFactory {
-    Enemy* makeStrongEnemy();
-    Enemy* makeWeakEnemy();
-    Enemy* makeEnemy(std::string const &spritePath, float const maxHealth);
+    Enemy *makeStrongEnemy();
+
+    Enemy *makeWeakEnemy();
+
+    Enemy *makeEnemy(std::string const &spritePath, float const maxHealth);
 }
 
 

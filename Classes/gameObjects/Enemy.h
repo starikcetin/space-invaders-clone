@@ -10,10 +10,13 @@ using namespace cocos2d;
 class Enemy : public Node {
 public:
     CREATE_FUNC(Enemy);
+
     virtual bool init() override;
+
     virtual void update(float) override;
 
     void takeDamage(float const amount);
+
     bool isDead() const;
 
 CC_SYNTHESIZE(float, maxHealth, MaxHealth);

@@ -2,15 +2,12 @@
 
 USING_NS_CC;
 
-Scene* Game::createScene()
-{
+Scene *Game::createScene() {
     return Game::create();
 }
 
-bool Game::init()
-{
-    if ( !Scene::initWithPhysics() )
-    {
+bool Game::init() {
+    if (!Scene::initWithPhysics()) {
         return false;
     }
 
@@ -54,12 +51,13 @@ bool Game::init()
 }
 
 void Game::spawnBullet(float const dt) {
-    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet() : BulletFactory::makeWeakBullet();
+    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet()
+                                      : BulletFactory::makeWeakBullet();
     bullet->setPosition(player->getPosition());
     addChild(bullet);
 }
 
-bool Game::onTouchBegan(Touch* const touch, Event* const event) {
+bool Game::onTouchBegan(Touch *const touch, Event *const event) {
     auto const touchState = calculateTouchState(touch->getLocation());
     auto const newPlayerSpeedX = calculatePlayerSpeedX(touchState);
     player->setSpeedX(newPlayerSpeedX);
@@ -67,35 +65,30 @@ bool Game::onTouchBegan(Touch* const touch, Event* const event) {
     return true;
 }
 
-void Game::onTouchMoved(Touch* const touch, Event* const event) {
+void Game::onTouchMoved(Touch *const touch, Event *const event) {
     auto const touchState = calculateTouchState(touch->getLocation());
     auto const newPlayerSpeedX = calculatePlayerSpeedX(touchState);
     player->setSpeedX(newPlayerSpeedX);
 }
 
-void Game::onTouchEnded(Touch* const touch, Event* const event) {
+void Game::onTouchEnded(Touch *const touch, Event *const event) {
     auto const newPlayerSpeedX = calculatePlayerSpeedX(NONE);
     player->setSpeedX(newPlayerSpeedX);
 }
 
-bool Game::onContactBegin(PhysicsContact const &contact)
-{
+bool Game::onContactBegin(PhysicsContact const &contact) {
     auto const nodeA = contact.getShapeA()->getBody()->getNode();
     auto const nodeB = contact.getShapeB()->getBody()->getNode();
     auto const contactPoint = contact.getContactData()->points[0];
 
-    if (nodeA && nodeB)
-    {
-        if (nodeA->getTag() == TAG_BULLET && nodeB->getTag() == TAG_ENEMY)
-        {
-            auto const bullet = static_cast<Bullet*>(nodeA);
-            auto const enemy = static_cast<Enemy*>(nodeB);
+    if (nodeA && nodeB) {
+        if (nodeA->getTag() == TAG_BULLET && nodeB->getTag() == TAG_ENEMY) {
+            auto const bullet = static_cast<Bullet *>(nodeA);
+            auto const enemy = static_cast<Enemy *>(nodeB);
             handleBulletHit(bullet, enemy, contactPoint);
-        }
-        else if (nodeA->getTag() == TAG_ENEMY && nodeB->getTag() == TAG_BULLET)
-        {
-            auto const enemy = static_cast<Enemy*>(nodeA);
-            auto const bullet = static_cast<Bullet*>(nodeB);
+        } else if (nodeA->getTag() == TAG_ENEMY && nodeB->getTag() == TAG_BULLET) {
+            auto const enemy = static_cast<Enemy *>(nodeA);
+            auto const bullet = static_cast<Bullet *>(nodeB);
             handleBulletHit(bullet, enemy, contactPoint);
         }
     }
@@ -103,20 +96,19 @@ bool Game::onContactBegin(PhysicsContact const &contact)
     return false; // no collision
 }
 
-void Game::handleBulletHit(Bullet* const bullet, Enemy* const enemy, Vec2 const &contactPoint)
-{
+void Game::handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const &contactPoint) {
     auto const damage = bullet->getDamage();
     auto const isBulletStrong = bullet->getIsStrong();
     enemy->takeDamage(damage);
 
     removeChild(bullet, true);
 
-    if(enemy->isDead()) {
+    if (enemy->isDead()) {
         removeChild(enemy, true);
         enemiesAlive--;
         AudioEngine::play2d(PATH_SOUND_KILL);
 
-        if(!isPowerActive && !isBulletStrong) {
+        if (!isPowerActive && !isBulletStrong) {
             killStreakCounter++;
             powerUpIfAvailable();
         }
@@ -135,9 +127,12 @@ Game::TouchState Game::calculateTouchState(Vec2 const &touchLocation) {
 
 float Game::calculatePlayerSpeedX(Game::TouchState const &touchState) {
     switch (touchState) {
-        case NONE:  return 0;
-        case LEFT:  return -PLAYER_SPEED;
-        case RIGHT: return PLAYER_SPEED;
+        case NONE:
+            return 0;
+        case LEFT:
+            return -PLAYER_SPEED;
+        case RIGHT:
+            return PLAYER_SPEED;
     }
 }
 
@@ -153,12 +148,13 @@ void Game::makeGridOfEnemies(int const rows) {
 void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
     const float rowWidth = playAreaMax.x - playAreaMin.x;
     const int cellCount = std::ceil(rowWidth / SHIP_CELL_SIZE);
-    const float effectiveRowWidth = SHIP_CELL_SIZE * (float)(cellCount - 1);
+    const float effectiveRowWidth = SHIP_CELL_SIZE * (float) (cellCount - 1);
     const float halfExcessRowWidth = (rowWidth - effectiveRowWidth) / 2.0f;
 
     for (int i = 0; i < cellCount; ++i) {
-        const float posX = playAreaMin.x + halfExcessRowWidth + (float)i * SHIP_CELL_SIZE;
-        auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy() : EnemyFactory::makeWeakEnemy();
+        const float posX = playAreaMin.x + halfExcessRowWidth + (float) i * SHIP_CELL_SIZE;
+        auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy()
+                                       : EnemyFactory::makeWeakEnemy();
         newEnemy->setPosition(posX, posY);
         addChild(newEnemy);
         enemiesAlive++;
@@ -166,13 +162,14 @@ void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
 }
 
 void Game::spawnHitMarker(Vec2 const &contactPoint, bool const isStrong) {
-    auto const hitMarker = isStrong ? HitMarkerFactory::makeStrongHitMarker() : HitMarkerFactory::makeWeakHitMarker();
+    auto const hitMarker = isStrong ? HitMarkerFactory::makeStrongHitMarker()
+                                    : HitMarkerFactory::makeWeakHitMarker();
     hitMarker->setPosition(contactPoint);
     addChild(hitMarker);
 }
 
 void Game::powerUpIfAvailable() {
-    if(killStreakCounter >= KILL_STREAK_FOR_POWER) {
+    if (killStreakCounter >= KILL_STREAK_FOR_POWER) {
         killStreakCounter = 0;
         isPowerActive = true;
         player->enablePowerAura();

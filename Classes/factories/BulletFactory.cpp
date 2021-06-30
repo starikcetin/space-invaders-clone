@@ -1,14 +1,15 @@
 #include "BulletFactory.h"
 
-Bullet* BulletFactory::makeStrongBullet() {
+Bullet *BulletFactory::makeStrongBullet() {
     return makeBullet(PATH_IMG_BULLET_STRONG, BULLET_STRONG_DAMAGE, true);
 }
 
-Bullet* BulletFactory::makeWeakBullet() {
+Bullet *BulletFactory::makeWeakBullet() {
     return makeBullet(PATH_IMG_BULLET_WEAK, BULLET_WEAK_DAMAGE, false);
 }
 
-Bullet* BulletFactory::makeBullet(std::string const &spritePath, float const damage, bool const isStrong) {
+Bullet *
+BulletFactory::makeBullet(std::string const &spritePath, float const damage, bool const isStrong) {
     auto const bullet = Bullet::create();
     bullet->setDamage(damage);
     bullet->setSpeedY(BULLET_SPEED);
