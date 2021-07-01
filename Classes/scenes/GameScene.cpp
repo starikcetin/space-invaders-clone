@@ -15,6 +15,7 @@ bool Game::init() {
     killStreakCounter = 0;
 
     _physicsWorld->setGravity(Vec2::ZERO);
+//    _physicsWorld->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
 
     auto const visibleSize = _director->getVisibleSize();
     auto const origin = _director->getVisibleOrigin();
@@ -60,6 +61,8 @@ bool Game::init() {
 
     auto const enemyPassedFinishListener = EventListenerCustom::create(EVENT_ENEMY_PASSED_FINISH, CC_CALLBACK_0(Game::onEnemyPassedFinish, this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyPassedFinishListener, this);
+
+    AudioEngine::play2d(PATH_SOUND_WIN); // reuse win sfx
 
     schedule(CC_SCHEDULE_SELECTOR(Game::spawnBullet), 1.0f / PLAYER_RATE_OF_FIRE);
     return true;
@@ -208,6 +211,9 @@ void Game::powerDown(float const dt) {
 }
 
 void Game::handleGameOver(bool const isVictory) {
+    _scheduler->unscheduleAllForTarget(this);
+    AudioEngine::stopAll();
+
     GameOverData const gameOverData = {
             .isVictory = isVictory,
             .score = score
