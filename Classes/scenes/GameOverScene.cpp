@@ -45,6 +45,9 @@ bool GameOver::init() {
     playButton->addTouchEventListener(CC_CALLBACK_2(GameOver::playButtonOnClick, this));
     addChild(playButton);
 
+    auto const sound = gameOverData.isVictory ? PATH_SOUND_WIN : PATH_SOUND_LOSE;
+    AudioEngine::play2d(sound);
+
     return true;
 }
 

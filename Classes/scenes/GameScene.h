@@ -36,6 +36,7 @@ private:
     int score;
     bool isPowerActive;
     Label* scoreLabel;
+    Label* killStreakLabel;
 
     bool onTouchBegan(Touch *const touch, Event *const event);
 
@@ -66,6 +67,8 @@ private:
     void updateScoreLabel();
 
     void onEnemyPassedFinish();
+
+    void updateKillStreakLabel();
 };
 
 #endif // __GAME_SCENE_H__

@@ -11,7 +11,7 @@ void Enemy::update(float const dt) {
     this->setPositionY(newPosY);
 
     if(newPosY <= finishLineY) {
-        EventCustom event(EVENT_ENEMY_PASSED_FINISH);
+        auto event = EventCustom(EVENT_ENEMY_PASSED_FINISH);
         _eventDispatcher->dispatchEvent(&event);
     }
 }

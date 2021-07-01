@@ -42,6 +42,12 @@ bool Game::init() {
     updateScoreLabel();
     addChild(scoreLabel);
 
+    killStreakLabel = Label::createWithTTF("", PATH_FONT_FUTURE_THIN, 10);
+    killStreakLabel->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
+    killStreakLabel->setPosition(Vec2(origin.x + visibleSize.width - 15, origin.y + visibleSize.height - 10));
+    updateKillStreakLabel();
+    addChild(killStreakLabel);
+
     auto const touchListener = EventListenerTouchOneByOne::create();
     touchListener->onTouchBegan = CC_CALLBACK_2(Game::onTouchBegan, this);
     touchListener->onTouchMoved = CC_CALLBACK_2(Game::onTouchMoved, this);
@@ -60,8 +66,10 @@ bool Game::init() {
 }
 
 void Game::spawnBullet(float const dt) {
-    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet()
-                                      : BulletFactory::makeWeakBullet();
+    auto const sound = isPowerActive ? PATH_SOUND_FIRE_STRONG : PATH_SOUND_FIRE_WEAK;
+    AudioEngine::play2d(sound, false, 0.1f);
+
+    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet() : BulletFactory::makeWeakBullet();
     bullet->setPosition(player->getPosition());
     addChild(bullet);
 }
@@ -126,6 +134,7 @@ void Game::handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const 
         if (!isPowerActive && !isBulletStrong) {
             killStreakCounter++;
             powerUpIfAvailable();
+            updateKillStreakLabel();
         }
     }
 
@@ -152,28 +161,24 @@ float Game::calculatePlayerSpeedX(Game::TouchState const &touchState) {
 }
 
 void Game::makeGridOfEnemies(int const rows) {
-    for (int i = 0; i < rows; ++i) {
-        auto const posY = playAreaMax.y - (float) i * SHIP_CELL_SIZE;
-        auto const isStrong = i % 2 == 1;
-        makeRowOfEnemies(posY, isStrong);
-    }
-}
-
-// TODO: inline this into makeGridOfEnemies
-void Game::makeRowOfEnemies(float const posY, bool const isStrong) {
     const float rowWidth = playAreaMax.x - playAreaMin.x;
     const int cellCount = std::ceil(rowWidth / SHIP_CELL_SIZE);
     const float effectiveRowWidth = SHIP_CELL_SIZE * (float) (cellCount - 1);
     const float halfExcessRowWidth = (rowWidth - effectiveRowWidth) / 2.0f;
 
-    for (int i = 0; i < cellCount; ++i) {
-        const float posX = playAreaMin.x + halfExcessRowWidth + (float) i * SHIP_CELL_SIZE;
-        auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy()
-                                       : EnemyFactory::makeWeakEnemy();
-        newEnemy->setPosition(posX, posY);
-        newEnemy->setFinishLineY(playAreaMin.y);
-        addChild(newEnemy);
-        enemiesAlive++;
+    for (int iy = 0; iy < rows; ++iy) {
+        auto const posY = playAreaMax.y - (float) iy * SHIP_CELL_SIZE;
+
+        for (int ix = 0; ix < cellCount; ++ix) {
+            auto const isStrong = (iy + ix) % 2 == 0;
+            float const posX = playAreaMin.x + halfExcessRowWidth + (float) ix * SHIP_CELL_SIZE;
+            auto const newEnemy = isStrong ? EnemyFactory::makeStrongEnemy()
+                                           : EnemyFactory::makeWeakEnemy();
+            newEnemy->setPosition(posX, posY);
+            newEnemy->setFinishLineY(playAreaMin.y);
+            addChild(newEnemy);
+            enemiesAlive++;
+        }
     }
 }
 
@@ -199,6 +204,7 @@ void Game::powerDown(float const dt) {
     isPowerActive = false;
     player->disablePowerAura();
     AudioEngine::play2d(PATH_SOUND_POWER_DOWN);
+    updateKillStreakLabel();
 }
 
 void Game::handleGameOver(bool const isVictory) {
@@ -212,7 +218,17 @@ void Game::handleGameOver(bool const isVictory) {
 }
 
 void Game::updateScoreLabel() {
-    scoreLabel->setString("Score: " + std::to_string(score));
+    scoreLabel->setString("SCORE: " + std::to_string(score));
+}
+
+void Game::updateKillStreakLabel() {
+    if(isPowerActive) {
+        killStreakLabel->setString("POWER ACTIVE");
+        killStreakLabel->setTextColor(Color4B::GREEN);
+    } else {
+        killStreakLabel->setString("KILL STREAK: " + std::to_string(killStreakCounter));
+        killStreakLabel->setTextColor(Color4B::WHITE);
+    }
 }
 
 void Game::onEnemyPassedFinish() {

@@ -14,8 +14,8 @@
 
 #define PATH_IMG_AURA               "images/aura.png"
 #define PATH_IMG_BG                 "images/bg.png"
-#define PATH_IMG_ENEMY_STRONG       "images/enemy_orange.png"
-#define PATH_IMG_ENEMY_WEAK         "images/enemy_black.png"
+#define PATH_IMG_ENEMY_STRONG       "images/enemy_strong.png"
+#define PATH_IMG_ENEMY_WEAK         "images/enemy_weak.png"
 #define PATH_IMG_HIT_MARKER_STRONG  "images/hit_green.png"
 #define PATH_IMG_HIT_MARKER_WEAK    "images/hit_red.png"
 #define PATH_IMG_BULLET_STRONG      "images/bullet_green.png"
@@ -27,8 +27,11 @@
 // Sound Paths
 //
 
+#define PATH_SOUND_FIRE_WEAK    "sounds/fire_weak.ogg"
+#define PATH_SOUND_FIRE_STRONG  "sounds/fire_strong.ogg"
 #define PATH_SOUND_KILL         "sounds/kill.ogg"
 #define PATH_SOUND_LOSE         "sounds/lose.ogg"
+#define PATH_SOUND_WIN          "sounds/win.ogg"
 #define PATH_SOUND_POWER_DOWN   "sounds/power_down.ogg"
 #define PATH_SOUND_POWER_UP     "sounds/power_up.ogg"
 
