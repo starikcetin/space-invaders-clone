@@ -4,8 +4,8 @@ void Utils::logLoadingError(char *const filename) {
     CCLOG("Error while loading: %s\n", filename);
 }
 
-Sprite *
-Utils::makeRepeatingBg(std::string const &path, Vec2 const &origin, Size const &visibleSize) {
+// repeats the given image so that it tiles the given area
+Sprite *Utils::makeRepeatingBg(std::string const &path, Vec2 const &origin, Size const &visibleSize) {
     Texture2D::TexParams texParams;
     texParams.magFilter = backend::SamplerFilter::LINEAR;
     texParams.minFilter = backend::SamplerFilter::LINEAR;

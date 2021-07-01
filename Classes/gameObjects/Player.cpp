@@ -3,10 +3,10 @@
 bool Player::init() {
     setTag(TAG_PLAYER);
 
-    sprite = Sprite::create(PATH_IMG_PLAYER);
-    sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
-    sprite->setPosition(Vec2::ZERO);
-    addChild(sprite);
+    body = Sprite::create(PATH_IMG_PLAYER);
+    body->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
+    body->setPosition(Vec2::ZERO);
+    addChild(body);
 
     aura = Sprite::create(PATH_IMG_AURA);
     aura->setAnchorPoint(Vec2::ANCHOR_MIDDLE);

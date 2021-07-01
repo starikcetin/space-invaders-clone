@@ -3,6 +3,7 @@
 
 
 #include "cocos2d.h"
+
 #include "Constants.h"
 #include "gameObjects/Bullet.h"
 
@@ -10,9 +11,7 @@ using namespace cocos2d;
 
 namespace BulletFactory {
     Bullet *makeStrongBullet();
-
     Bullet *makeWeakBullet();
-
     Bullet *makeBullet(std::string const &spritePath, float const damage, bool const isStrong);
 }
 

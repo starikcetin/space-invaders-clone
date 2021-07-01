@@ -8,18 +8,17 @@
 #include "Utils.h"
 #include "GameScene.h"
 
+using namespace cocos2d;
 using namespace ui;
 
 class MainMenu : public cocos2d::Scene {
 public:
     static cocos2d::Scene *createScene();
-
     virtual bool init();
+    CREATE_FUNC(MainMenu);
 
 private:
     void playButtonOnClick(Ref *const sender, Widget::TouchEventType const type);
-
-    CREATE_FUNC(MainMenu);
 };
 
 #endif // __MAINMENU_SCENE_H__

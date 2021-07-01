@@ -10,19 +10,17 @@
 #include "GameOverData.h"
 #include "GameScene.h"
 
+using namespace cocos2d;
 using namespace ui;
 
-class GameOver : public cocos2d::Scene {
+class GameOver : public Scene {
 public:
     static GameOver *create(GameOverData const &data);
-
     virtual bool init() override;
 
 private:
     GameOverData const &gameOverData;
-
     GameOver(GameOverData const &data);
-
     void playButtonOnClick(Ref *const sender, const Widget::TouchEventType type);
 };
 

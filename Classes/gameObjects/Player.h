@@ -1,7 +1,9 @@
 #ifndef PROJ_ANDROID_PLAYER_H
 #define PROJ_ANDROID_PLAYER_H
 
+
 #include "cocos2d.h"
+
 #include "Constants.h"
 
 using namespace cocos2d;
@@ -9,19 +11,15 @@ using namespace cocos2d;
 class Player : public Node {
 public:
     CREATE_FUNC(Player);
-
     virtual bool init() override;
-
     virtual void update(float) override;
-
     void resetPosition(float const posY);
-
     void enablePowerAura();
-
     void disablePowerAura();
 
 private:
-    Sprite *sprite, *aura;
+    Sprite *body;
+    Sprite *aura;
 
     float calculateNewXWithinLimits(float const deltaX);
 

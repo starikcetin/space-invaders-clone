@@ -3,6 +3,7 @@
 
 
 #include "cocos2d.h"
+
 #include "Constants.h"
 
 using namespace cocos2d;
@@ -10,9 +11,7 @@ using namespace cocos2d;
 class Bullet : public Node {
 public:
     CREATE_FUNC(Bullet);
-
     virtual bool init() override;
-
     virtual void update(float) override;
 
 private:

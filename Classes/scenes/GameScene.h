@@ -14,6 +14,8 @@
 #include "factories/BulletFactory.h"
 #include "factories/HitMarkerFactory.h"
 
+using namespace cocos2d;
+
 class Game : public cocos2d::Scene {
 public:
     enum TouchState {
@@ -21,11 +23,8 @@ public:
     };
 
     static cocos2d::Scene *createScene();
-
     virtual bool init() override;
-
     CREATE_FUNC(Game);
-
     void spawnBullet(float const dt);
 
 private:
@@ -38,36 +37,20 @@ private:
     Label *scoreLabel;
     Label *killStreakLabel;
 
-    bool onTouchBegan(Touch *const touch, Event *const event);
-
-    void onTouchMoved(Touch *const touch, Event *const event);
-
-    void onTouchEnded(Touch *const touch, Event *const event);
-
-    bool onContactBegin(PhysicsContact const &contact);
-
-    TouchState calculateTouchState(Vec2 const &touchLocation);
-
     static float calculatePlayerSpeedX(TouchState const &touchState);
-
+    bool onTouchBegan(Touch *const touch, Event *const event);
+    void onTouchMoved(Touch *const touch, Event *const event);
+    void onTouchEnded(Touch *const touch, Event *const event);
+    bool onContactBegin(PhysicsContact const &contact);
+    TouchState calculateTouchState(Vec2 const &touchLocation);
     void makeGridOfEnemies(int const rows);
-
-    void makeRowOfEnemies(float const posY, bool const isStrong);
-
     void handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const &contactPoint);
-
     void spawnHitMarker(Vec2 const &contactPoint, bool const isStrong);
-
     void powerUpIfAvailable();
-
     void powerDown(float const dt);
-
     void handleGameOver(const bool isVictory);
-
     void updateScoreLabel();
-
     void onEnemyPassedFinish();
-
     void updateKillStreakLabel();
 };
 

@@ -8,8 +8,7 @@ Bullet *BulletFactory::makeWeakBullet() {
     return makeBullet(PATH_IMG_BULLET_WEAK, BULLET_WEAK_DAMAGE, false);
 }
 
-Bullet *
-BulletFactory::makeBullet(std::string const &spritePath, float const damage, bool const isStrong) {
+Bullet *BulletFactory::makeBullet(std::string const &spritePath, float const damage, bool const isStrong) {
     auto const sprite = Sprite::create(spritePath);
     sprite->setAnchorPoint(Vec2::ANCHOR_MIDDLE);
     sprite->setPosition(Vec2::ZERO);

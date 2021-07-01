@@ -27,6 +27,8 @@
 
 #include "cocos2d.h"
 
+#include "scenes/MainMenuScene.h"
+
 /**
 @brief    The cocos2d Application.
 
