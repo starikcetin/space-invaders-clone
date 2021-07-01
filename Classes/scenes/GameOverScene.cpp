@@ -15,7 +15,7 @@ GameOver *GameOver::create(GameOverData const &data) {
     return nullptr;
 }
 
-GameOver::GameOver(GameOverData const &data): gameOverData(data) {}
+GameOver::GameOver(GameOverData const &data) : gameOverData(data) {}
 
 bool GameOver::init() {
     if (!Scene::init()) {

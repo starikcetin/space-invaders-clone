@@ -15,6 +15,7 @@ using namespace ui;
 class GameOver : public cocos2d::Scene {
 public:
     static GameOver *create(GameOverData const &data);
+
     virtual bool init() override;
 
 private:

@@ -8,7 +8,8 @@ Enemy *EnemyFactory::makeWeakEnemy() {
     return makeEnemy(PATH_IMG_ENEMY_WEAK, ENEMY_WEAK_HEALTH, ENEMY_WEAK_SCORE);
 }
 
-Enemy *EnemyFactory::makeEnemy(std::string const &spritePath, float const maxHealth, int const score) {
+Enemy *
+EnemyFactory::makeEnemy(std::string const &spritePath, float const maxHealth, int const score) {
     auto const enemy = Enemy::create();
     enemy->setMaxHealth(maxHealth);
     enemy->setCurrentHealth(maxHealth);

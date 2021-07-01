@@ -35,8 +35,8 @@ private:
     int killStreakCounter;
     int score;
     bool isPowerActive;
-    Label* scoreLabel;
-    Label* killStreakLabel;
+    Label *scoreLabel;
+    Label *killStreakLabel;
 
     bool onTouchBegan(Touch *const touch, Event *const event);
 

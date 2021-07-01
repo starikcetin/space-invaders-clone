@@ -58,7 +58,6 @@ endif()
 list(APPEND GAME_SOURCE
      Classes/AppDelegate.cpp
 	 Classes/Utils.cpp
-     Classes/scenes/HelloWorldScene.cpp
 	 Classes/scenes/MainMenuScene.cpp
 	 Classes/scenes/GameScene.cpp
 	 Classes/scenes/GameOverScene.cpp
@@ -74,7 +73,6 @@ list(APPEND GAME_HEADER
 	 Classes/GameOverData.h
      Classes/AppDelegate.h
 	 Classes/Utils.h
-     Classes/scenes/HelloWorldScene.h
      Classes/scenes/MainMenuScene.h
 	 Classes/scenes/GameScene.h
 	 Classes/scenes/GameOverScene.h

@@ -10,7 +10,7 @@ void Enemy::update(float const dt) {
     auto const newPosY = curPosY - speedY * dt;
     this->setPositionY(newPosY);
 
-    if(newPosY <= finishLineY) {
+    if (newPosY <= finishLineY) {
         auto event = EventCustom(EVENT_ENEMY_PASSED_FINISH);
         _eventDispatcher->dispatchEvent(&event);
     }

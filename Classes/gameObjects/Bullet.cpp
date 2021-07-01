@@ -14,7 +14,7 @@ void Bullet::update(float dt) {
     auto const newPosY = curPosY + speedY * dt;
     this->setPositionY(newPosY);
 
-    if(newPosY >= screenTopY + halfSpriteHeight) {
+    if (newPosY >= screenTopY + halfSpriteHeight) {
         removeFromParentAndCleanup(true);
     }
 }

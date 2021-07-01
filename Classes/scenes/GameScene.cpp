@@ -24,7 +24,8 @@ bool Game::init() {
                        origin.y + HALF_SHIP_CELL_SIZE + PLAY_AREA_PADDING);
 
     playAreaMax = Vec2(origin.x + visibleSize.width - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING,
-                       origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING - PLAY_AREA_EXTRA_TOP_PADDING);
+                       origin.y + visibleSize.height - HALF_SHIP_CELL_SIZE - PLAY_AREA_PADDING -
+                       PLAY_AREA_EXTRA_TOP_PADDING);
 
     auto const background = Utils::makeRepeatingBg(PATH_IMG_BG, origin, visibleSize);
     addChild(background);
@@ -45,7 +46,8 @@ bool Game::init() {
 
     killStreakLabel = Label::createWithTTF("", PATH_FONT_FUTURE_THIN, 10);
     killStreakLabel->setAnchorPoint(Vec2::ANCHOR_TOP_RIGHT);
-    killStreakLabel->setPosition(Vec2(origin.x + visibleSize.width - 15, origin.y + visibleSize.height - 10));
+    killStreakLabel->setPosition(
+            Vec2(origin.x + visibleSize.width - 15, origin.y + visibleSize.height - 10));
     updateKillStreakLabel();
     addChild(killStreakLabel);
 
@@ -59,7 +61,10 @@ bool Game::init() {
     contactListener->onContactBegin = CC_CALLBACK_1(Game::onContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
-    auto const enemyPassedFinishListener = EventListenerCustom::create(EVENT_ENEMY_PASSED_FINISH, CC_CALLBACK_0(Game::onEnemyPassedFinish, this));
+    auto const enemyPassedFinishListener = EventListenerCustom::create(EVENT_ENEMY_PASSED_FINISH,
+                                                                       CC_CALLBACK_0(
+                                                                               Game::onEnemyPassedFinish,
+                                                                               this));
     _eventDispatcher->addEventListenerWithSceneGraphPriority(enemyPassedFinishListener, this);
 
     AudioEngine::play2d(PATH_SOUND_WIN); // reuse win sfx
@@ -72,7 +77,8 @@ void Game::spawnBullet(float const dt) {
     auto const sound = isPowerActive ? PATH_SOUND_FIRE_STRONG : PATH_SOUND_FIRE_WEAK;
     AudioEngine::play2d(sound, false, 0.1f);
 
-    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet() : BulletFactory::makeWeakBullet();
+    auto const bullet = isPowerActive ? BulletFactory::makeStrongBullet()
+                                      : BulletFactory::makeWeakBullet();
     bullet->setPosition(player->getPosition());
     addChild(bullet);
 }
@@ -130,7 +136,7 @@ void Game::handleBulletHit(Bullet *const bullet, Enemy *const enemy, Vec2 const 
         removeChild(enemy, true);
         AudioEngine::play2d(PATH_SOUND_KILL);
 
-        if(enemiesAlive <= 0) {
+        if (enemiesAlive <= 0) {
             handleGameOver(true);
         }
 
@@ -228,7 +234,7 @@ void Game::updateScoreLabel() {
 }
 
 void Game::updateKillStreakLabel() {
-    if(isPowerActive) {
+    if (isPowerActive) {
         killStreakLabel->setString("POWER ACTIVE");
         killStreakLabel->setTextColor(Color4B::GREEN);
     } else {
